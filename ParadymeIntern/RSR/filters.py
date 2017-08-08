@@ -12,13 +12,6 @@ WORKAUTHORIZATION_CHOICES = (
     )
 
 class PersonFilter(django_filters.FilterSet):
-    def ANDOR(self, queryset, name, value):
-        #'AND option'
-        for item in value:
-           queryset=queryset.filter(**{name:item})
-        #'OR option'
-        #queryset=queryset.filter(**{name:value})
-        return queryset
     SchoolAttend = django_filters.ModelChoiceFilter(name='persontoschool__SchoolID', queryset=School.objects.all().order_by('Name'),
                                                     to_field_name='Name')
     #SchoolAttend = django_filters.ModelChoiceFilter(name='school__Name',
@@ -39,11 +32,12 @@ class PersonFilter(django_filters.FilterSet):
                                                   to_field_name='Desc')
     Language = django_filters.ModelMultipleChoiceFilter(name='persontolanguage__LangID',
                                                 queryset=LanguageSpoken.objects.all(),
-                                                widget=autocomplete.ModelSelect2Multiple(url='RSR:LanguageSpoken-autocomplete'))
+                                                widget=autocomplete.ModelSelect2Multiple(url='RSR:LanguageSpoken-autocomplete'),
+                                                        conjoined=True)
     Skills = django_filters.ModelMultipleChoiceFilter(name='persontoskills__SkillsID',
                                               queryset=Skills.objects.all().order_by('Name'),
                                               widget=autocomplete.ModelSelect2Multiple(url='RSR:Skills-autocomplete'),
-                                                      method='ANDOR')
+                                                      conjoined=True)
     YearOfExperienceForSkill = django_filters.ModelChoiceFilter(name='persontoskills__YearsOfExperience',
                                                                 lookup_expr='gte',
                                                                 queryset=PersonToSkills.objects.values_list('YearsOfExperience',flat=True).
