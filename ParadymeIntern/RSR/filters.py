@@ -3,6 +3,7 @@ import django_filters
 from .models import *
 from django import forms
 from dal import autocomplete
+from django.db.models import Q
 
 WORKAUTHORIZATION_CHOICES = (
         ('Citizenship', 'Citizenship'),
@@ -31,10 +32,12 @@ class PersonFilter(django_filters.FilterSet):
                                                   to_field_name='Desc')
     Language = django_filters.ModelMultipleChoiceFilter(name='persontolanguage__LangID',
                                                 queryset=LanguageSpoken.objects.all(),
-                                                widget=autocomplete.ModelSelect2Multiple(url='RSR:LanguageSpoken-autocomplete'))
+                                                widget=autocomplete.ModelSelect2Multiple(url='RSR:LanguageSpoken-autocomplete'),
+                                                        conjoined=True)
     Skills = django_filters.ModelMultipleChoiceFilter(name='persontoskills__SkillsID',
-                                              queryset=Skills.objects.all().order_by('Name').distinct(),
-                                              widget=autocomplete.ModelSelect2Multiple(url='RSR:Skills-autocomplete'))
+                                              queryset=Skills.objects.all().order_by('Name'),
+                                              widget=autocomplete.ModelSelect2Multiple(url='RSR:Skills-autocomplete'),
+                                                      conjoined=True)
     YearOfExperienceForSkill = django_filters.ModelChoiceFilter(name='persontoskills__YearsOfExperience',
                                                                 lookup_expr='gte',
                                                                 queryset=PersonToSkills.objects.values_list('YearsOfExperience',flat=True).
