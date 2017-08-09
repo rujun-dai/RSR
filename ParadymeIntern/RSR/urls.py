@@ -53,7 +53,16 @@ urlpatterns = [
         name='LanguageSpoken-autocomplete',),
         #url for autocomplete function for Company class
     url(r'^search/Company-autocomplete/$', Companyautocomplete.as_view(),
-        name='Company-autocomplete',)
+        name='Company-autocomplete',),
+        #url for autocomplete function for coursework class
+    url(r'^search/Coursework-autocomplete/$', Courseworkautocomplete.as_view(),
+        name='Coursework-autocomplete',),
+        #url for autocomplete function for Awards class
+    url(r'^search/Awards-autocomplete/$', Awardsautocomplete.as_view(),
+        name='Awards-autocomplete',),
+        #url for autocomplete function for Title class
+    url(r'^search/Title-autocomplete/$', Titleautocomplete.as_view(),
+        name='Title-autocomplete',)
 
 
 ]
