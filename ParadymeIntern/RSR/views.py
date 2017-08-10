@@ -79,7 +79,7 @@ def search(request):
 class ProfessionalDevelopmentAutocomplete(autocomplete.Select2QuerySetView):
     # autocomplete function for ProfessionalDevelopment class
     def get_queryset(self):
-        qs = ProfessionalDevelopment.order_by('Name').distinct()
+        qs = ProfessionalDevelopment.objects.order_by('Name').distinct()
 
         if self.q:
             qs = qs.filter(Name__istartswith=self.q)
@@ -124,6 +124,30 @@ class Companyautocomplete(autocomplete.Select2QuerySetView):
         qs = Company.objects.order_by('Name').distinct()
         if self.q:
             qs = qs.filter(Name__istartswith=self.q)
+        return qs
+
+class Courseworkautocomplete(autocomplete.Select2QuerySetView):
+    # autocomplete function for Coursework class
+    def get_queryset(self):
+        qs = PersonToCourse.objects.order_by('Desc').distinct()
+        if self.q:
+            qs = qs.filter(Desc__istartswith=self.q)
+        return qs
+
+class Awardsautocomplete(autocomplete.Select2QuerySetView):
+    # autocomplete function for Awards class
+    def get_queryset(self):
+        qs = Awards.objects.order_by('Name').distinct()
+        if self.q:
+            qs = qs.filter(Name__istartswith=self.q)
+        return qs
+
+class Titleautocomplete(autocomplete.Select2QuerySetView):
+    # autocomplete function for Title class
+    def get_queryset(self):
+        qs = PersonToCompany.objects.order_by('Title').distinct()
+        if self.q:
+            qs = qs.filter(Title__istartswith=self.q)
         return qs
 
 def detail(request,pk):
