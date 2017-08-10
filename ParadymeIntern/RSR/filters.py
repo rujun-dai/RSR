@@ -10,7 +10,6 @@ WORKAUTHORIZATION_CHOICES = (
         ('Permanent Resident', 'Permanent Resident'),
         ('Visa', 'Visa')
     )
-
 class PersonFilter(django_filters.FilterSet):
     SchoolAttend = django_filters.ModelChoiceFilter(name='persontoschool__SchoolID', queryset=School.objects.all().order_by('Name'),
                                                     to_field_name='Name')
@@ -27,9 +26,11 @@ class PersonFilter(django_filters.FilterSet):
                                                    to_field_name='DegreeLevel')
     GPAlb = django_filters.NumberFilter(name='persontoschool__GPA',lookup_expr='gte')
     GPAub = django_filters.NumberFilter(name='persontoschool__GPA',lookup_expr='lt')
-    Coursework = django_filters.ModelChoiceFilter(name='persontocourse__Desc',
-                                                  queryset=PersonToCourse.objects.values_list('Desc', flat=True).distinct().order_by('Desc'),
-                                                  to_field_name='Desc')
+    Coursework = django_filters.ModelMultipleChoiceFilter(name='persontocourse__Desc',
+                                                  queryset=PersonToCourse.objects.distinct().order_by('Desc'),
+                                                  widget=autocomplete.ModelSelect2Multiple(
+                                                      url='RSR:Coursework-autocomplete'),
+                                                     conjoined = True)
     Language = django_filters.ModelMultipleChoiceFilter(name='persontolanguage__LangID',
                                                 queryset=LanguageSpoken.objects.all(),
                                                 widget=autocomplete.ModelSelect2Multiple(url='RSR:LanguageSpoken-autocomplete'),

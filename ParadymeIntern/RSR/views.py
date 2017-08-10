@@ -76,6 +76,15 @@ def search(request):
     personFilter = PersonFilter(request.GET, query_set)
     return render(request, 'SearchExport/search.html', {'personFilter': personFilter})
 
+
+class Courseworkautocomplete(autocomplete.Select2QuerySetView):
+    # autocomplete function for Coursework class
+    def get_queryset(self):
+        qs = PersonToCourse.objects.order_by('Desc').distinct()
+        if self.q:
+            qs = qs.filter(Desc__istartswith=self.q)
+        return qs
+
 class ProfessionalDevelopmentAutocomplete(autocomplete.Select2QuerySetView):
     # autocomplete function for ProfessionalDevelopment class
     def get_queryset(self):

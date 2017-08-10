@@ -343,6 +343,9 @@ class PersonToClearance(models.Model):
 
 
 class PersonToCourse(models.Model):
+    def __str__(self):
+        return self.Desc
+
     CourseID = models.ForeignKey(Coursework,  on_delete=models.CASCADE)
     Desc = models.CharField("Coursework Description", max_length=50,default = "None")
     PersonID = models.ForeignKey(Person, on_delete=models.CASCADE)
