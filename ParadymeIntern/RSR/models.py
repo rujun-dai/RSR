@@ -277,7 +277,6 @@ class Volunteering(models.Model):
 ######### INTERMEDIARY TABLES ##########
 
 class PersonToCompany(models.Model):
-
     def __str__(self):
         return self.Title
 
@@ -347,7 +346,6 @@ class PersonToClearance(models.Model):
 
 
 class PersonToCourse(models.Model):
-
     def __str__(self):
         return self.Desc
 
