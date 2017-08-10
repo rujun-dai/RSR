@@ -277,6 +277,9 @@ class Volunteering(models.Model):
 ######### INTERMEDIARY TABLES ##########
 
 class PersonToCompany(models.Model):
+    def __str__(self):
+        return self.Title
+
     PersonID = models.ForeignKey(Person,  on_delete=models.CASCADE)
     CompanyID = models.ForeignKey(Company,  on_delete=models.CASCADE)
     Title = models.CharField("Title", max_length=100, default="None")
@@ -349,6 +352,7 @@ class PersonToCourse(models.Model):
     CourseID = models.ForeignKey(Coursework,  on_delete=models.CASCADE)
     Desc = models.CharField("Coursework Description", max_length=50,default = "None")
     PersonID = models.ForeignKey(Person, on_delete=models.CASCADE)
+
 
 
 class PersonToSchool(models.Model):
