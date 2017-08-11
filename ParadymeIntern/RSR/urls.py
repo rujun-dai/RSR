@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^main/$', main, name = 'main'),
     url(r'^search/$', search, name='search'),
     url(r'^edit/(?P<person_id>\d+)/$', views.person_edit, name='person-edit'),
-
+    url(r'^LA/$', linkanalysis, name='LA'),
     url(r'^logout/$', views.logout_page, name = 'logout'),
 
     #Search/Export Team
@@ -37,4 +37,3 @@ urlpatterns = [
 
 
 ]
-

@@ -347,6 +347,7 @@ def ocr (request):
 def parsing(request):
     return render(request, 'parsing.html')
 
+
 @login_required
 def search(request):
     query_set = Person.objects.all()
@@ -355,10 +356,86 @@ def search(request):
         query_set=query_set.filter(Name__icontains=query)
     # The filtered query_set is then put through more filters from django
     personFilter = PersonFilter(request.GET, query_set)
-    print(personFilter)
-    #dump2csv.dump(personFilter, './Dummy_Data.csv')
-
+    #make_LA_Connections(request.GET,personFilter.queryset)
     return render(request, 'SearchExport/search.html', {'personFilter': personFilter})
+
+def personSearch(cat,key,person):
+    if cat == 'YearOfExperienceForSkill':
+        if len(PersonToSkills.objects.filter(PersonID = person.pk).filter(YearsOfExperience = key)) != 0:
+            return key
+        else:
+            return None
+    elif cat == 'GraduateDate':
+        if PersonToSchool.objects.filter(PersonID = person.pk).filter(GradDate = key) != 0:
+            return key
+    elif cat == 'CompanyWorked':
+        try:
+            return PersonToCompany.objects.filter(PersonID = person.pk).get(CompanyID = key).CompanyID
+        except PersonToCompany.DoesNotExist:
+            return None
+    elif cat == 'Award':
+        try:
+            return PersonToAwards.objects.filter(PersonID = person.pk).get(AwardID = key).AwardID
+        except PersonToAwards.DoesNotExist:
+            return None
+    elif cat == 'ProfessionalDevelopment':
+        print(PersonToProfessionalDevelopment.objects.filter(PersonID = p.pk))
+    elif cat == 'GPAub':
+        try:
+            return PersonToSchool.objects.filter(GPA__lte = key).get(PersonID = person.pk).GPA
+        except PersonToSchool.DoesNotExist:
+            return None
+    elif cat == 'GPAlb':
+        try:
+            return PersonToSchool.objects.filter(GPA__gte = key).get(PersonID = person.pk).GPA
+        except PersonToSchool.DoesNotExist:
+            return None
+    elif cat == 'SchoolAttend':
+        try:
+            return PersonToSchool.objects.filter(PersonID = person.pk).get(SchoolID = key).SchoolID
+        except PersonToSchool.DoesNotExist:
+            return None
+    elif cat == 'Club_Hobby':
+        try:
+            return PersonToClubs_Hobbies.objects.filter(CHID = key).get(PersonID = person.pk).CHID
+        except PersonToClubs_Hobbies.DoesNotExist:
+            return None
+    elif cat == 'Skills':
+        try:
+            return PersonToSkills.objects.filter(PersonID = person.pk).get(SkillsID = key).SkillsID
+        except PersonToSkills.DoesNotExist:
+            return None
+    elif cat == 'DegreeLevel':
+        schools = PersonToSchool.objects.filter(PersonID = person.pk)
+        for s in schools:
+            if s.SchoolID.DegreeLevel == key:
+                return key
+        return None
+    elif cat == 'Major':
+        try:
+            return PersonToSchool.objects.filter(MajorID = key).get(PersonID = person.pk).MajorID
+        except PersonToSchool.DoesNotExist:
+            return None
+    elif cat == 'SecurityClearance':
+        if PersonToClearance.objects.filter(PersonID = person.pk).filter(ClearanceLevel = key) != 0:
+            return key
+        else:
+            return None
+    elif cat == 'Language':
+        try:
+            return PersonToLanguage.objects.filter(LangID = key).get(PersonID = person.pk).LangID
+        except PersonToLanguage.DoesNotExist:
+            return None
+    elif cat == 'Volunteering':
+        if PersonToVolunteering.objects.filter(PersonID = person.pk).filter(VolunID = Volunteering.objects.get(Name = key).pk)!= 0:
+            return key
+        else:
+            return None
+    elif cat == 'Title':
+        if PersonToCompany.objects.filter(PersonID = person.pk).filter(Title = key)!= 0:
+            return key
+        else:
+            return None
 
 @login_required
 def detail(request,pk):
@@ -410,32 +487,66 @@ def export(request):
 
 @login_required
 def linkanalysis(request):
-    df = pd.read_csv('./Dummy_Data.csv', header=None, skiprows=1)
-    if '2' in df.columns:
-        G=nx.from_pandas_dataframe(df[0:5],0,1)
-        H=nx.from_pandas_dataframe(df[0:5],0,2)
-        G.add_edges_from(H.edges())
-    else:
-        G=nx.from_pandas_dataframe(df[0:5],0,1)
-        G.add_edges_from(H.edges())
+    query_set = Person.objects.all()
+    query = request.GET.get("q")
+    if query:
+        query_set=query_set.filter(Name__icontains=query)
+    # The filtered query_set is then put through more filters from django
+    personFilter = PersonFilter(request.GET, query_set)
+    arr = []
+    print(request.GET)
+    for key in request.GET:
+        if request.GET[key] !='':
+            arr.append(key)
+    arr.append('Person')
+    df = pd.DataFrame(columns = arr)
+    arr.remove('Person')
+    for person in personFilter.queryset:
+        new_entry = {}
+        new_entry['Person'] = person.Name
+        for key in arr:
+            new_entry[key] = personSearch(key,request.GET[key],person)
+            #new_entry[key] = request.GET[key]
+        df = df.append(new_entry,ignore_index = True)
+    print(personFilter.queryset)
+    make_LA(df)
+    return render(request, 'SearchExport/search.html', {'personFilter': personFilter})
+
+
+def make_LA(df):
+    Columns=list(df)
+    print(len(Columns))
+    i=0
+    for column in Columns:
+        G=nx.from_pandas_dataframe(df,df.columns[0],column)
+        G.add_edges_from(G.edges())
+        for i in range(1,len(Columns)-1):
+            H=nx.from_pandas_dataframe(df,df.columns[i],column)
+            G.add_edges_from(H.edges())
+    print(df)
     nx.info(G)
+
     Nodes = G.number_of_nodes()
     Edges = G.number_of_edges()
 
-    pos = nx.spring_layout(G, k=0.9, iterations=1, scale=2)
+    pos = nx.spring_layout(G,k=0.9,iterations=1, scale=2)
     #pos = nx.shell_layout(G)
+    #pos = nx.nx_pydot.graphviz_layout(G, prog = 'dot')
     N = Nodes
     E = Edges
-
-    plt.figure(1, figsize = (20,20), dpi=100)
+    #pos = nx.random_layout(G,scale=2)
+    plt.figure(1,figsize=(20, 20), dpi=100)
     colors_nodes = np.random.rand(N)
     colors_edges = np.random.rand(E)
-    nx.draw_networkx(G, pos, node_color=color_nodes, edge_color=color_edges, arrows= True, node_size= 4500, node_shape= 'p', alpha= 1, linewidths= 10, clip_on=1)
-    nx.draw_networkx_labels(G,pos,font_size=12,font_color= 'R')
+    nx.draw_networkx(G,pos, node_color=colors_nodes, edge_color=colors_edges, arrows=True, node_size = 4500,
+                 node_shape='p', alpha= 1,linewidths= 10, clip_on=1,)
+    nx.draw_networkx_labels(G,pos, font_size=12, font_color= 'R')
     labels = nx.get_edge_attributes(G,'weight')
     nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
+
     plt.show()
-    return render(request, 'linkanalysis.html')
+
+
 
 @login_required
 def uploadlist (request):
