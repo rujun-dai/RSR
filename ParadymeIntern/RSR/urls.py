@@ -64,5 +64,4 @@ urlpatterns = [
     url(r'^search/Title-autocomplete/$', Titleautocomplete.as_view(),
         name='Title-autocomplete',)
 
-
 ]
