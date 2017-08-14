@@ -260,6 +260,8 @@ def get_minor_index(minor_result,resume_file):
        minor_result = minor_result.group()
    if minor_result is not None:
        minor_index = resume_file.find(minor_result)
+   else:
+       minor_index = 0
    return(minor_index)
 
 def get_master_index(master_major_result,resume_file):
@@ -350,9 +352,10 @@ def extract_university(resume_token_lower,university_combined):
 
 #extract GPA:
 def extract_GPA(resume):
-    result = re.search(r'(GPA|gpa): ?\d.\d{1,}',resume)
+    result = re.search(r'(GPA|gpa):( ?\d.\d{1,})',resume)
     if result:
-        result = result.group(0)
+        result = result.group(2)
+        result = float(result)
     return (result)
 
 #execution of extracting GPA:
@@ -410,7 +413,7 @@ def extract_company(resume):
     if comp == None:
         return []
     else:
-        return comp    
+        return comp
 
 #Find the experience header
 def find_exp_header (resume,experience_list):
@@ -759,8 +762,7 @@ def check_phone_number(string_to_search):
             result = "-".join(result)
         return result
     except:
-        return None
-
+        return 0000000000
 
 
 #Ashish (LinkedIn Profiles and Every other URL in the file)

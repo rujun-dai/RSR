@@ -1,250 +1,282 @@
-{'prev_word_in_skill_list': '<Start>', 'next_word_in_skill_list': False, '(miguel)in_skill_list': False} not skill
-{'(lorenzo)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, '(m.)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(aviles)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'(1644)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.04, '(new)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(windsor)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(ct)in_skill_list': False} not skill
-{'(crofton)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(maryland)in_skill_list': False} not skill
-{'(21114)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, '(703)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(501-1932)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, '(maviles)in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(@_umd.edu)in_skill_list': False} not skill
-{'(objective)in_skill_list': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(dedicated)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(motivated)in_skill_list': False} not skill
-{'(computer science)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(student)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': True, '(seeking)in_skill_list': False} not skill
-{'(programming)in_skill_list': True, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.32} skill
-{'(internship)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(offering)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(creativity)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(attention detail)in_skill_list': False} not skill
-{'(skills)in_skill_list': False, 'probality_of_similar_words_skills': 0.32, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(complemented)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'(sales)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(experience)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, '(apply)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, '(classroom)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.36, '(knowledge)in_skill_list': False, 'next_word_in_skill_list': True, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(innovative)in_skill_list': True, 'in_skill_cluster': True} skill
-{'prev_word_in_skill_list': True, 'next_word_in_skill_list': False, '(ideas)in_skill_list': False} not skill
-{'(meaningful)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(real-world)in_skill_list': False} not skill
-{'(applications)in_skill_list': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.32, 'prev_word_in_skill_list': False, '(gain)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(experience)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(field)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': '<End>', 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': '<Start>', 'next_word_in_skill_list': False, '(education university maryland college)in_skill_list': False} not skill
-{'(park)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(computer science)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'(major)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(3.04)in_skill_list': False} not skill
-{'(gpa)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(general)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(business)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.04, '(minor)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, '(anne arundel)in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, '(community college)in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'(3.62)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'(gpa)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(associate)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, '(sciences)in_skill_list': False, 'next_word_in_skill_list': True, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(engineering)in_skill_list': True, 'in_skill_cluster': True} skill
-{'probality_of_similar_words_skills': 0.08, '(transfer)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': True, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(fall 2013)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, '(dean_’_list)in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'(2012)in_skill_list': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(2013)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0} not skill
-{'(south)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(river)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(high school)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(4.048)in_skill_list': False} not skill
-{'(gpa)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, '(president)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(’)in_skill_list': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(award)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0} not skill
-{'(educational)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(excellence)in_skill_list': False} not skill
-{'(2012)in_skill_list': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.32, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(advanced)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(placement)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(ap)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, '(diploma)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(endorsement)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'(2012)in_skill_list': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(certificate)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(merit)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0} not skill
-{'(2012)in_skill_list': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(ap)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, '(scholar)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(distinction)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(computer skills)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(courses)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, '(platforms windows)in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(unix linux)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': True, '(languages java)in_skill_list': False} not skill
-{'(c)in_skill_list': True, 'probality_of_similar_words_skills': 0.36, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': True, 'in_skill_cluster': True} skill
-{'prev_word_in_skill_list': True, '(visual basic)in_skill_list': True, 'next_word_in_skill_list': True} skill
-{'(assembly)in_skill_list': True, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.2} skill
-{'prev_word_in_skill_list': True, '(javascript css)in_skill_list': False, 'next_word_in_skill_list': True} not skill
-{'probality_of_similar_words_skills': 0.44, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': True, '(html)in_skill_list': True, 'in_skill_cluster': True} skill
-{'(ruby)in_skill_list': True, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.28} skill
-{'(ocaml)in_skill_list': True, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.32} skill
-{'(applications)in_skill_list': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': True, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.28, '(eclipse)in_skill_list': True, 'next_word_in_skill_list': True, 'prev_word_in_skill_list': False, 'in_skill_cluster': True} skill
-{'(microsoft word)in_skill_list': True, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': True} skill
-{'(excel)in_skill_list': True, 'probality_of_similar_words_skills': 0.76, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': True, 'in_skill_cluster': True} skill
-{'prev_word_in_skill_list': True, 'next_word_in_skill_list': True, '(power point)in_skill_list': True} skill
-{'probality_of_similar_words_skills': 0.28, '(eclipse)in_skill_list': True, 'next_word_in_skill_list': True, 'prev_word_in_skill_list': True, 'in_skill_cluster': True} skill
-{'probality_of_similar_words_skills': 0.2, '(wordpress)in_skill_list': True, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': True, 'in_skill_cluster': True} skill
-{'probality_of_similar_words_skills': 0.6, '(adobe)in_skill_list': False, 'next_word_in_skill_list': True, 'prev_word_in_skill_list': True, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.52, '(acrobat)in_skill_list': True, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': True} skill
-{'probality_of_similar_words_skills': 0.4, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': True, '(pro)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.6, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': True, '(photoshop)in_skill_list': True, 'in_skill_cluster': True} skill
-{'probality_of_similar_words_skills': 0.68, 'prev_word_in_skill_list': True, '(matlab)in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': True} skill
-{'(major)in_skill_list': False, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(courses)in_skill_list': False} not skill
-{'(programming c)in_skill_list': False, 'next_word_in_skill_list': True, 'prev_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(engineering)in_skill_list': True, 'in_skill_cluster': True} skill
-{'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': True, '(digital)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(logic)in_skill_list': True, 'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': True, 'in_skill_cluster': True} skill
-{'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': True, '(design)in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': True} skill
-{'prev_word_in_skill_list': True, 'next_word_in_skill_list': False, '(introduction computer systems)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': True, '(computer)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': True, '(organization)in_skill_list': True, 'in_skill_cluster': True} skill
-{'prev_word_in_skill_list': True, '(object oriented programming)in_skill_list': True, 'next_word_in_skill_list': False} skill
-{'(signal)in_skill_list': False, 'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, '(system)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.32, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(theory)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(discrete structures)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(algorithms)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(experience)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, '(thompson)in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(creek)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(window)in_skill_list': False} not skill
-{'(company)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04} not skill
-{'(october 2012)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(october 2014)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(canvass)in_skill_list': False} not skill
-{'(representative)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(collaborated)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.04, '(diverse)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(sales)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(team)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(canvassed)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(neighborhoods)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.04, '(set)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, '(in-home)in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(customer)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(appointments)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(homeowners)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(order)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(promote)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, '(thompson)in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(creek)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(products)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': '<End>', 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0} not skill
-{'prev_word_in_skill_list': '<Start>', '(checkers)in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'(drive-in)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, '(october)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(2010)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, '(november)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(2012)in_skill_list': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(crew)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, '(member)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(performed)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, '(food)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(tasks)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04} not skill
-{'(stations)in_skill_list': False, 'probality_of_similar_words_skills': 0.16, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(restaurant)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(provided)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(excellent)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, '(customer service)in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'(mastered)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(point-of-sale)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, '(system)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(delegated)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'(tasks)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(crew)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(assisted)in_skill_list': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, '(managers)in_skill_list': False, 'next_word_in_skill_list': '<End>', 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': '<Start>', 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(walter)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(reed)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(army)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(institute)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(research)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(june)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(28)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'(2010)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(august)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(5)in_skill_list': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(2011)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(gems)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(gains)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': True, 'in_skill_cluster': False, '(education)in_skill_list': False} not skill
-{'(mathematics)in_skill_list': True, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': True} skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(science)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(intern)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(researched)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(wide range)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(interdisciplinary)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(topics)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': True, '(including)in_skill_list': False} not skill
-{'(programming)in_skill_list': True, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.32} skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': True, '(via)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(in-depth)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(hands-on)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(inquiry-based)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, '(teaching)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': '<End>', '(modules)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(others)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': '<Start>'} not skill
-{'(web-designer)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.04, '(local)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(music)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(talent)in_skill_list': False} not skill
-{'(2016-present)in_skill_list': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(;)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, '(member)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(association)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, '(women)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, '(computing)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'prev_word_in_skill_list': False, '(2015_–)in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(present)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.04, '(encourage)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.0, '(women)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(join)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04} not skill
-{'(stay)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04} not skill
-{'(computer science)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'(field)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(;)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(fundraiser)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.04, '(local)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, '(fire)in_skill_list': False} not skill
-{'(departments)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'(2015-2016)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'(;)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': True, '(student)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False, '(project)in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': True} skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': True, '(lead)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(way)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(2008-2012)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(program)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(focused)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, '(stem)in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, '(fields)in_skill_list': False, 'next_word_in_skill_list': '<End>'} not skill
-{'(skills)in_skill_list': False, 'probality_of_similar_words_skills': 0.32, 'prev_word_in_skill_list': '<Start>', 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(willingness)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(learn)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(commitment)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.12} not skill
-{'(dependability)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(self-motivation)in_skill_list': False} not skill
-{'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(team)in_skill_list': False, 'in_skill_cluster': False} not skill
-{'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False, '(work)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False} not skill
-{'(oral written)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': True, '(communication skills)in_skill_list': False} not skill
-{'prev_word_in_skill_list': False, 'next_word_in_skill_list': False, '(problem solving)in_skill_list': True} skill
-{'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': '<End>', '(ability)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'(narjit)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': '<Start>'} not skill
+{'(singh)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(11406)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(cherry)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'(hill)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'(rd)in_skill_list': False, 'next_word_in_skill_list': '<End>', 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': '<Start>', 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, '(unit)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(101)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(beltsville)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(md)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(20705)in_skill_list': False} not skill
+{'(narjittsingh)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(@_gmail.com)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.0, '(301)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(326-9625)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.48, '(https)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(//github.com/snarjit)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(education university maryland college)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'(park md)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(anticipated)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(graduation date)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(may 2018)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(bachelor science computer science)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(gpa)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'(3.062)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(skills languages)in_skill_list': False} not skill
+{'(proficient)in_skill_list': False, 'next_word_in_skill_list': True, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.36, 'prev_word_in_skill_list': False} not skill
+{'(java)in_skill_list': True, 'next_word_in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.36, 'prev_word_in_skill_list': False} skill
+{'next_word_in_skill_list': True, 'prev_word_in_skill_list': True, '(html css)in_skill_list': True} skill
+{'next_word_in_skill_list': True, '(android)in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.2, 'prev_word_in_skill_list': True} skill
+{'(c)in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.36, 'prev_word_in_skill_list': True} skill
+{'(prior)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': True, '(experience)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': True, '(ruby)in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.28, 'prev_word_in_skill_list': False} skill
+{'(assembly)in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.2, 'prev_word_in_skill_list': True} skill
+{'(x86)in_skill_list': False, 'next_word_in_skill_list': True, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': True, 'prev_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.32, '(ocaml)in_skill_list': True} skill
+{'(development)in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': True} skill
+{'next_word_in_skill_list': True, '(tools eclipse)in_skill_list': False, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': False, '(android studio)in_skill_list': True, 'prev_word_in_skill_list': False} skill
+{'next_word_in_skill_list': True, 'prev_word_in_skill_list': True, '(sublime)in_skill_list': False} not skill
+{'next_word_in_skill_list': True, '(xcode)in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.36, 'prev_word_in_skill_list': False} skill
+{'next_word_in_skill_list': True, 'prev_word_in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.6, '(photoshop)in_skill_list': True} skill
+{'next_word_in_skill_list': False, '(junit)in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.24, 'prev_word_in_skill_list': True} skill
+{'(adobe)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.6, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': True, '(indesign)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'(illustrator)in_skill_list': True, 'next_word_in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.48, 'prev_word_in_skill_list': False} skill
+{'next_word_in_skill_list': True, 'prev_word_in_skill_list': True, 'probality_of_similar_words_skills': 0.56, '(dreamweaver)in_skill_list': True, 'in_skill_cluster': True} skill
+{'(microsoft office)in_skill_list': True, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': False} skill
+{'next_word_in_skill_list': True, '(word excel)in_skill_list': False, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.68, '(powerpoint)in_skill_list': True, 'in_skill_cluster': True} skill
+{'(operating systems windows)in_skill_list': False, 'prev_word_in_skill_list': True, 'next_word_in_skill_list': False} not skill
+{'(xp/7/8,10)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': True, '(mac os x)in_skill_list': True, 'prev_word_in_skill_list': False} skill
+{'(linux)in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.24, 'prev_word_in_skill_list': True} skill
+{'(courses)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(cmsc)in_skill_list': False, 'probality_of_similar_words_skills': 0.08, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': True, '(131,132)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'(java)in_skill_list': True, 'next_word_in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.36, 'prev_word_in_skill_list': False} skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.32, '(programming)in_skill_list': True} skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': True, '(cmsc)in_skill_list': False, 'probality_of_similar_words_skills': 0.08, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(216)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(c programming)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(cmsc)in_skill_list': False, 'probality_of_similar_words_skills': 0.08, 'in_skill_cluster': False} not skill
+{'(250)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.12, '(discrete)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(math)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(cmsc)in_skill_list': False, 'probality_of_similar_words_skills': 0.08, 'in_skill_cluster': False} not skill
+{'(330)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'(organization programming languages)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(cmsc)in_skill_list': False, 'probality_of_similar_words_skills': 0.08, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(351)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'(algorithms)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(cmsc)in_skill_list': False, 'probality_of_similar_words_skills': 0.08, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(411)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(experience)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(talklocal)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'(college park maryland)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
+{'(june)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'(august 2016)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(software developer)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(intern)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(implemented)in_skill_list': False, 'probality_of_similar_words_skills': 0.12, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(android application)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(contained)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.04, '(various)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(religions)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, '(provided)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.04, '(user)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(many)in_skill_list': False, 'probality_of_similar_words_skills': 0.04, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(features)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'(related)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': '<End>', '(religion)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': True, 'prev_word_in_skill_list': '<Start>', 'probality_of_similar_words_skills': 0.2, '(followed)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': True, '(waterfall)in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.4, 'prev_word_in_skill_list': False} skill
+{'(software development)in_skill_list': True, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': True} skill
+{'next_word_in_skill_list': False, '(process)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': True} not skill
+{'(design implement)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
+{'(whole)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(application)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': '<End>', 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, '(scratch)in_skill_list': False} not skill
+{'next_word_in_skill_list': True, '(application)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': '<Start>'} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.32, '(google)in_skill_list': True} skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': True, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, '(play)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, '(store)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.48, '(https)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(//play.google.com/store/apps/details)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(id=talklocal.buttontest)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': True, '(hl=en)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(debugged)in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} skill
+{'(prepared)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.04, '(various)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(build)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.28, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(versions)in_skill_list': False} not skill
+{'next_word_in_skill_list': True, 'prev_word_in_skill_list': False, '(released)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.32, '(google)in_skill_list': True} skill
+{'(app)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.16, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': True, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, '(store)in_skill_list': False} not skill
+{'(supervised)in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} skill
+{'next_word_in_skill_list': False, '(interns)in_skill_list': False, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': False, '(implement)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.04, '(various)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(features)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(application)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.0, '(personal)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(projects)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(learntabla)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(developed)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(android application)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(teaches)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(users)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, '(play)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(tabla)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(indian)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(drums)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': '<End>', '(online)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': '<Start>', 'probality_of_similar_words_skills': 0.04, '(integrated)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'(audio)in_skill_list': False, 'next_word_in_skill_list': True, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.28, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(video)in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False} skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': True, 'probality_of_similar_words_skills': 0.12, '(learning)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(segments)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(instructions)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(made)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(programmed)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': False} not skill
+{'(designed)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(every)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'(single)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'(part)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': False} not skill
+{'(app)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.16, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': True, '(technologies used)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': True, '(android studio)in_skill_list': True, 'prev_word_in_skill_list': False} skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.6, '(photoshop)in_skill_list': True} skill
+{'next_word_in_skill_list': False, '(clone/download)in_skill_list': False, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': False, '(link)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.48, '(https)in_skill_list': False} not skill
+{'(//github.com/snarjit/learntabla2.git)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(locallink)in_skill_list': False} not skill
+{'(implementing)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(mobile app)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(allow)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'(advertisers)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, '(hire)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, '(expert)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(based)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(needs)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.12, '(services)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.12, '(created)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(mockup)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False} not skill
+{'(app)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.16, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.0, '(via)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'(gomockingbird)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(clone/download)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.48, '(https)in_skill_list': False} not skill
+{'(//github.com/snarjit/locallink.git)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.48, '(https)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(//gomockingbird.com/mockingbird/)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(cg4zzeo/mbiaw)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(academic projects)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(online)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False} not skill
+{'(test)in_skill_list': False, 'next_word_in_skill_list': True, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.16, 'prev_word_in_skill_list': False} not skill
+{'(java)in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.36, 'prev_word_in_skill_list': False} skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': True, 'probality_of_similar_words_skills': 0.12, '(created)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, '(examination)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(system)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(allowed users)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.08, '(add)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'(three)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'(possible)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(kinds)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(questions)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'(true)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
+{'(false)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(multiple)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'(choice)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(fill-in-the-blanks)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(questions)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(graded)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(submitted)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(exams)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(generated)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(statistical)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.24, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, '(information)in_skill_list': False} not skill
+{'(designed)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(classes)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(using)in_skill_list': False} not skill
+{'(5)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(7)in_skill_list': False, 'probality_of_similar_words_skills': 0.16, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': True, '(components)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(software)in_skill_list': True, 'probality_of_similar_words_skills': 0.24, 'in_skill_cluster': True} skill
+{'next_word_in_skill_list': False, '(life cycle)in_skill_list': False, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(problem)in_skill_list': False, 'probality_of_similar_words_skills': 0.04, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(specification)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': True, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.0, '(program)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(design)in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False} skill
+{'(algorithms)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': False, '(data structures)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'(coding)in_skill_list': False, 'next_word_in_skill_list': True, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': True, '(debugging)in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.24, 'prev_word_in_skill_list': False} skill
+{'next_word_in_skill_list': False, '(testing)in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.2, 'prev_word_in_skill_list': True} skill
+{'(verification)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': True, '(wordnet)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(ruby)in_skill_list': True, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.28, 'prev_word_in_skill_list': False} skill
+{'next_word_in_skill_list': False, '(parsed)in_skill_list': False, 'prev_word_in_skill_list': True} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, '(large)in_skill_list': False} not skill
+{'(text)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.16, '(files)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(used)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.2, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(regular)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'(expressions)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, '(extract)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(essential)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.12, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, '(information)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(stored)in_skill_list': False, 'probality_of_similar_words_skills': 0.16, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(hashes)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'(constructed)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(wordnet)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(graph)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(grouped)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(words)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(sets)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(synonyms)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(called)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(synsets)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(described)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(semantic)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': '<End>', '(relationships)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(generated)in_skill_list': False, 'prev_word_in_skill_list': '<Start>'} not skill
+{'next_word_in_skill_list': False, '(breadth)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.0, '(first)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, '(search)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.08, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(graph)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'(find)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(length)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'(nodes)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'(ancestors)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'(find)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.04, '(common)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, '(root)in_skill_list': False} not skill
+{'next_word_in_skill_list': '<End>', 'prev_word_in_skill_list': False, '(words)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': '<Start>', '(activities)in_skill_list': False, 'probality_of_similar_words_skills': 0.0, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(national society leadership success)in_skill_list': False} not skill
+{'(fall 2016)in_skill_list': False, 'next_word_in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.0, '(current)in_skill_list': False, 'in_skill_cluster': False} not skill
+{'(virtual)in_skill_list': False, 'next_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.24, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(realty)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(club)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(create)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.04, 'prev_word_in_skill_list': False} not skill
+{'(games)in_skill_list': False, 'prev_word_in_skill_list': False, 'next_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': True, 'prev_word_in_skill_list': False, '(using)in_skill_list': False} not skill
+{'(c)in_skill_list': True, 'next_word_in_skill_list': False, 'in_skill_cluster': True, 'probality_of_similar_words_skills': 0.36, 'prev_word_in_skill_list': False} skill
+{'next_word_in_skill_list': True, 'prev_word_in_skill_list': True, '(unity)in_skill_list': False, 'probality_of_similar_words_skills': 0.04, 'in_skill_cluster': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(spring)in_skill_list': True, 'probality_of_similar_words_skills': 0.2, 'in_skill_cluster': True} skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': True, '(2015-current)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(cyber security)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': True, '(club)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(spring)in_skill_list': True, 'probality_of_similar_words_skills': 0.2, 'in_skill_cluster': True} skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': True, '(2015-current)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, '(mobile app)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, 'prev_word_in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.12, '(developer)in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(club)in_skill_list': False, 'in_skill_cluster': False, 'probality_of_similar_words_skills': 0.0, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': False, '(spring 2015)in_skill_list': False, 'prev_word_in_skill_list': False} not skill
+{'next_word_in_skill_list': '<End>', 'prev_word_in_skill_list': False, 'probality_of_similar_words_skills': 0.0, '(current)in_skill_list': False, 'in_skill_cluster': False} not skill
