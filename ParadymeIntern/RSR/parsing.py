@@ -10,76 +10,29 @@ from nltk.collocations import BigramCollocationFinder
 from nltk.metrics import BigramAssocMeasures
 from nltk.tokenize import RegexpTokenizer
 from nltk import ngrams
+import re
+import usaddress
 from fuzzywuzzy.process import dedupe
+import nltk
+import pandas as pd
+import os
+import codecs
+from gensim.models import Phrases
+from gensim.models import Word2Vec
+import json
+import re
 
+def parse_file(resume):
 
-def skill_extraction():
-#just skills
-
-
-def university_extraction():
-#University name, major, gpa
-
-
-
-
-def company_extraction():
-#Companies, titles, dates, work experience
-
-
-
-def personel_information():
-#name,phone number, address, linkedin, github
-
-
+    parsed = {}
+    #execution of extracting name, email, phone number
+    parsed['person'] = personel_information(resume)
+    parsed['education'] = extract_School(resume)
+    parsed['work'] = extract_company(resume)
+    parsed['skills'] = extract_all_skills(resume)
+    print('EDUCATION: ',parsed['education'])
+    return parsed
 #Eric’s section (name, email, phone, university, major, gpa) Done
-
-
-
-#import path & variables
-resume_path = r"/Users/yiyangzhou/Desktop/Yiyang (Eric) Zhou Resume 2017 Fall.txt"
-
-resume_file = open(resume_path).read()
-resume_file2 = open(resume_path).read()
-resume_file2 = resume_file2.lower()
-#change path
-major_df = pandas.read_excel('majors.xlsx')
-major_df.columns
-major_file = major_df['Majors'].values
-major_lower = [item.lower() for item in major_file]
-tokenizer = RegexpTokenizer(r'\w+')
-resume_token = tokenizer.tokenize(resume_file)
-resume_token2 = tokenizer.tokenize(resume_file2)
-major_distinct = []
-dictionary = {'Name': 5}
-regular_expression = re.compile(r"/BA|BS|Bachelor of Science|Bachelor of Arts|BBA |B/A|Bachelor of Business Administration/", re.IGNORECASE)
-bach_major_result = re.search(regular_expression, resume_file)
-regular_expression_two = re.compile(r"minor|Minor", re.IGNORECASE)
-minor_result = re.search(regular_expression_two, resume_file)
-regular_expression_three = re.compile(r"Master|master", re.IGNORECASE)
-master_major_result = re.search(regular_expression_three, resume_file)
-regular_expression_four = re.compile(r"university", re.IGNORECASE)
-university_major_result = re.search(regular_expression_four, resume_file)
-updated_majors1 = []
-indexes_majors1 = []
-updated_majors2 = []
-indexes_majors2 = []
-updated_majors3 = []
-indexes_majors3 = []
-updated_majors4 = []
-indexes_majors4 = []
-majors_minors_all = updated_majors1 + updated_majors2 + updated_majors3 + updated_majors4
-
-university_df1 = pandas.read_excel('China_University.xlsx')
-university_df2 = pandas.read_excel('India_University.xlsx')
-university_df3 = pandas.read_excel('US_University.xlsx')
-university_file1 = university_df1['Universities'].values
-university_file2 = university_df2['Universities'].values
-university_file3 = university_df3['Universities'].values
-university_lower1 = [item.lower() for item in university_file1]
-university_lower2 = [item.lower() for item in university_file2]
-university_lower3 = [item.lower() for item in university_file3]
-university_combined = university_lower1 + university_lower2 + university_lower3
 
 
 #extract name finished
@@ -96,8 +49,8 @@ def extract_last_name(resume):
     print (last_name)
 
 def extract_name(resume):
-    name = extract_first_name(resume_file) + extract_last_name(resume_file)
-    print (name)
+    name = extract_first_name(resume) + extract_last_name(resume)
+    return name
 
 #extract email finished
 def extract_email(resume):
@@ -105,7 +58,7 @@ def extract_email(resume):
     result = re.search(regular_expression, resume)
     if result:
         result = result.group()
-    print (result)
+    return result
 
 #extract phone number finished
 
@@ -132,15 +85,96 @@ def extract_phone_number(resume):
 
 
 def personel_information(resume):
-    print(extract_name(resume))
-    print(extract_email(resume))
-    print(extract_phone_number(resume))
+    personel = {}
+    resume_file = resume
+    resume_file2 = resume_file.lower()
+    #change path
+    personel['name'] = extract_name(resume)
 
-#execution of extracting name, email, phone number
-personel_information(resume_file)
+    personel['email'] = extract_email(resume)
+    personel['phone'] = extract_phone_number(resume)
+    personel['address'] = extract_address(resume)
+    personel['github'] = check_GitHub(resume)
+    #print(check_email(resume))
+    personel['linkedin'] = check_linkedin(resume)
+    #print(check_phone_number(resume))
+    print('URLs: ',extract_URLs(resume))
+    return personel
 
 
+def extract_School(resume):
+    resume_file = resume
+    resume_file2 = resume_file.lower()
+    major_df = pandas.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','majors.xlsx')))
+    major_df.columns
+    major_file = major_df['Majors'].values
+    major_lower = [item.lower() for item in major_file]
+    tokenizer = RegexpTokenizer(r'\w+')
+    resume_token = tokenizer.tokenize(resume_file)
+    resume_token2 = tokenizer.tokenize(resume_file2)
+    major_distinct = []
+    dictionary = {'Name': 5}
+    regular_expression = re.compile(r"/BA|BS|B\.S|Bachelor of Science|Bachelor of Arts|BBA |B/A|Bachelor of Business Administration/", re.IGNORECASE)
+    bach_major_result = re.search(regular_expression, resume_file)
+    regular_expression_two = re.compile(r"minor|Minor", re.IGNORECASE)
+    minor_result = re.search(regular_expression_two, resume_file)
+    regular_expression_three = re.compile(r"Master|master", re.IGNORECASE)
+    master_major_result = re.search(regular_expression_three, resume_file)
+    regular_expression_four = re.compile(r"university", re.IGNORECASE)
+    university_major_result = re.search(regular_expression_four, resume_file)
+    updated_majors1 = []
+    indexes_majors1 = []
+    updated_majors2 = []
+    indexes_majors2 = []
+    updated_majors3 = []
+    indexes_majors3 = []
+    updated_majors4 = []
+    indexes_majors4 = []
+    university_df1 = pandas.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','China_University.xlsx')))
+    university_df2 = pandas.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','India_University.xlsx')))
+    university_df3 = pandas.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','US_University.xlsx')))
+    university_file1 = university_df1['Universities'].values
+    university_file2 = university_df2['Universities'].values
+    university_file3 = university_df3['Universities'].values
+    university_lower1 = [item.lower() for item in university_file1]
+    university_lower2 = [item.lower() for item in university_file2]
+    university_lower3 = [item.lower() for item in university_file3]
+    university_combined = university_lower1 + university_lower2 + university_lower3
+    get_majors(resume_token2, major_lower)
+    get_majors2(resume_token2, major_lower,major_distinct)
+    get_majors_index(major_distinct,resume_file2,dictionary)
+    get_bach_index(bach_major_result,resume_file)
+    get_minor_index(minor_result,resume_file)
+    get_master_index(master_major_result,resume_file)
+    get_university_index(university_major_result,resume_file)
+    print('BACH: ',get_bach_major(dictionary,resume_file,bach_major_result,updated_majors1,indexes_majors1))
+    print('MASTER: ',get_master_major(dictionary,resume_file,master_major_result,updated_majors2,indexes_majors2))
+    print('MINOR: ',get_minor(dictionary,resume_file,minor_result,updated_majors3,indexes_majors3))
+    print('What is this: ',get_university_major(dictionary,resume_file,university_major_result,updated_majors4,indexes_majors4))
+    print('UNI: ',extract_university(resume_token2,university_combined))
+    print('GPA: ',extract_GPA(resume_file))
+    schools = []
+    school = {}
+    school_info = {}
+    major_info = {}
+    school_info['name'] = extract_university(resume_token2,university_combined)
+    school_info['degreeLevel'] = 'Undergraduate'
+    school['school'] = school_info
+    school['gradDate'] = 'Jan 2012'
+    GPA = extract_GPA(resume_file)
+    if GPA != None:
+        school['GPA'] =GPA
+    else:
+        school['GPA'] = 0
 
+    major_info['major'] = get_university_major(dictionary,resume_file,university_major_result,updated_majors4,indexes_majors4)
+    major_info['dept'] = '?'
+    major_info['major/minor'] = 'Major'
+    school['major'] = major_info
+    schools.append(school)
+    print('SCHOOL:  ',schools)
+
+    return schools
 #major, University, gpa
 def get_bigrams(input):
     n = 2
@@ -150,7 +184,6 @@ def get_bigrams(input):
         x = "%s %s" % grams
         result.append(x)
     return (result)
-    print (result)
 
 
 def get_threegrams(input):
@@ -161,7 +194,6 @@ def get_threegrams(input):
         x = "%s %s %s" % grams
         result.append(x)
     return (result)
-    print (result)
 
 def get_fourgrams(input):
     n = 4
@@ -171,7 +203,6 @@ def get_fourgrams(input):
         x = "%s %s %s %s" % grams
         result.append(x)
     return (result)
-    print (result)
 
 def get_fivegrams(input):
     n = 5
@@ -181,7 +212,6 @@ def get_fivegrams(input):
         x = "%s %s %s %s %s" % grams
         result.append(x)
     return (result)
-    print (result)
 
 def get_sixgrams(input):
     n = 6
@@ -191,7 +221,6 @@ def get_sixgrams(input):
         x = "%s %s %s %s %s %s" % grams
         result.append(x)
     return (result)
-    print (result)
 
 def get_majors(a,b):
     majors=[]
@@ -199,9 +228,8 @@ def get_majors(a,b):
         if x in b:
             majors.append(x)
     return (majors)
-    print (majors)
 
-def get_majors2(a,b):
+def get_majors2(a,b,major_distinct):
     unigram_major = get_majors(a, b)
     bigram_major = get_majors(get_bigrams(a), b)
     threegram_major = get_majors(get_threegrams(a), b)
@@ -209,91 +237,87 @@ def get_majors2(a,b):
     for i in combined_majors_list:
         if i not in major_distinct:
             major_distinct.append(i)
-    print (major_distinct)
+    return(major_distinct)
 
-def get_majors_index(major_distinct):
+def get_majors_index(major_distinct,resume_file2,dictionary):
     for i, element in enumerate(major_distinct):
         x = resume_file2.find(element)
         dictionary[element] = x
     del dictionary['Name']
-    print(dictionary)
+    return dictionary
 
-def get_bach_index(bach_major_result):
+def get_bach_index(bach_major_result,resume_file):
     if bach_major_result:
         bach_major_result = bach_major_result.group()
-    print (bach_major_result)
     if bach_major_result is not None:
         bach_major_index = resume_file.find(bach_major_result)
-    return(bach_major_index)
-    print(bach_major_index)
+        return(bach_major_index)
+    else:
+        return 0
 
-def get_minor_index(minor_result):
+def get_minor_index(minor_result,resume_file):
    if minor_result:
        minor_result = minor_result.group()
-   print (minor_result)
    if minor_result is not None:
        minor_index = resume_file.find(minor_result)
    return(minor_index)
-   print(minor_index)
 
-def get_master_index(master_major_result):
+def get_master_index(master_major_result,resume_file):
     if master_major_result:
         master_major_result = master_major_result.group()
-    print (master_major_result)
     if master_major_result is not None:
         master_major_index = resume_file.find(master_major_result)
-    return(master_major_index)
-    print(master_major_index)
+        return(master_major_index)
+    else:
+        return 0
 
-def get_university_index(university_major_result):
+def get_university_index(university_major_result,resume_file):
     if university_major_result:
         university_major_result = university_major_result.group()
-    print (university_major_result)
     if university_major_result is not None:
         university_major_index = resume_file.find(university_major_result)
-    return(university_major_index)
-    print(university_major_index)
+        return(university_major_index)
+    else:
+        return 0
 
-def get_bach_major(dictionary):
-    bach_major_index = get_bach_index(bach_major_result)
-    upper_bound = bach_major_index +100
+def get_bach_major(dictionary,resume_file,bach_major_result,updated_majors1,indexes_majors1):
+    bach_major_index = get_bach_index(bach_major_result,resume_file) - 100
+    upper_bound = bach_major_index + 100
     for k, v in dictionary.items():
         if (bach_major_index < v < upper_bound):
             updated_majors1.append(k)
             indexes_majors1.append(v)
-    print(updated_majors1)
-    print(indexes_majors1)
+    return updated_majors1
 
-
-def get_master_major(dictionary):
-    master_major_index = get_master_index(master_major_result)
+def get_master_major(dictionary,resume_file,master_major_result,updated_majors2,indexes_majors2):
+    master_major_index = get_master_index(master_major_result,resume_file)
+    if master_major_index == 0:
+        return []
     upper_bound = master_major_index +100
     for k, v in dictionary.items():
         if (master_major_index < v < upper_bound):
             updated_majors2.append(k)
             indexes_majors2.append(v)
-    print(updated_majors2)
-    print(indexes_majors2)
-
-def get_minor(dictionary):
-    minor_index = get_minor_index(minor_result)
+    return updated_majors2
+def get_minor(dictionary,resume_file,minor_result,updated_majors3,indexes_majors3):
+    minor_index = get_minor_index(minor_result,resume_file)
     upper_bound = minor_index +100
     for k, v in dictionary.items():
         if (minor_index < v < upper_bound):
             updated_majors3.append(k)
             indexes_majors3.append(v)
-    print(updated_majors3)
-    print(indexes_majors3)
+    return updated_majors3
 
-def get_university_major(dictionary):
-    university_major_index = get_university_index(university_major_result)
+def get_university_major(dictionary,resume_file,university_major_result,updated_majors4,indexes_majors4):
+    university_major_index = get_university_index(university_major_result,resume_file)
+    if university_major_index == 0:
+        return []
     upper_bound = university_major_index +100
     for k, v in dictionary.items():
         if (university_major_index < v < upper_bound):
             updated_majors4.append(k)
             indexes_majors4.append(v)
-    print(updated_majors4)
-    print(indexes_majors4)
+    return updated_majors4
 
 
 
@@ -301,23 +325,7 @@ def extract_major(majors_minors_all):
     majors_minors_all = updated_majors1 + updated_majors2 + updated_majors3 + updated_majors4
     majors_minors_final_list = list(dedupe(majors_minors_all))
     return (majors_minors_final_list)
-    print (majors_minors_final_list)
 
-
-#execution of extracting majors:
-
-get_majors(resume_token2, major_lower)
-get_majors2(resume_token2, major_lower)
-get_majors_index(major_distinct)
-get_bach_index(bach_major_result)
-get_minor_index(minor_result)
-get_master_index(master_major_result)
-get_university_index(university_major_result)
-get_bach_major(dictionary)
-get_master_major(dictionary)
-get_minor(dictionary)
-get_university_major(dictionary)
-print (extract_major(majors_minors_all))
 
 #extract University:
 def get_university(a,b):
@@ -326,7 +334,6 @@ def get_university(a,b):
         if x in b:
             resume_university.append(x)
     return (resume_university)
-    print (resume_university)
 
 def extract_university(resume_token_lower,university_combined):
     unigram_university = get_university(resume_token_lower, university_combined)
@@ -335,11 +342,11 @@ def extract_university(resume_token_lower,university_combined):
     fourgram_university = get_university(get_fourgrams(resume_token_lower), university_combined)
     fivegram_university = get_university(get_fivegrams(resume_token_lower), university_combined)
     sixgram_university = get_university(get_sixgrams(resume_token_lower), university_combined)
-    combined_university_extraction = set(bigram_university + threegram_university + fourgram_university + fivegram_university + sixgram_university)
-    print (combined_university_extraction)
+    combined_university_extraction = list(bigram_university + threegram_university + fourgram_university + fivegram_university + sixgram_university)
+    print('UNI: ', bigram_university,threegram_university,fourgram_university)
+    return combined_university_extraction
 
 #execution of extracting university:
-extract_university(resume_token2,university_combined)
 
 #extract GPA:
 def extract_GPA(resume):
@@ -347,18 +354,14 @@ def extract_GPA(resume):
     if result:
         result = result.group(0)
     return (result)
-    print (result)
 
 #execution of extracting GPA:
-extract_GPA(resume_file)
 
 
 #HENRY
 
 #Extracting Address
 
-import re
-import usaddress
 
 #extract the address
 def extract_address (text):
@@ -377,6 +380,7 @@ def parse_address(result):
 #2. Extracting Company
 
 import codecs
+import itertools
 import os
 import pandas as pd
 from fuzzywuzzy.process import dedupe
@@ -384,19 +388,32 @@ import spacy
 from nltk.corpus import stopwords
 
 
-filename = 'BrandonThomasResume.txt'
-#Open file
-def open_file(filename):
-    resume = open(filename, 'r', errors='ignore').read()
-    return resume
-resume = open_file(filename)
+def extract_company(resume):
 
 #Read the Work_Experience_List
-data = pd.read_excel("Work Experience.xlsx", header=0)
-experience_list = list(data['Example'])
+    data = pd.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing',"Work Experience.xlsx")), header=0)
+    experience_list = list(data['Example'])
+    exp_header = find_exp_header(resume,experience_list)
+    exp_header = (exp_header[0], resume.find(exp_header[0]))
+    next_section = find_next_section(resume,exp_header)
+    workexp_section = get_workexp_section(resume,next_section,exp_header)
+    workexp_section = workexp_section.split('\n')
+    company_info = get_exp_info(workexp_section)
+    #Print the company info
+    for i, company in enumerate(company_info):
+        company = company.replace('\t', '')
+        print('\nCompany {}:'.format(i+1), company)
+
+    nlp = spacy.load('en')
+    print('COMPANY: ',extract_exp_info(company_info))
+    comp = extract_exp_info(company_info)
+    if comp == None:
+        return []
+    else:
+        return comp    
 
 #Find the experience header
-def find_exp_header (resume):
+def find_exp_header (resume,experience_list):
     exp_header_list=[]
     for word in experience_list:
         if resume.find(word) != -1:
@@ -406,11 +423,10 @@ def find_exp_header (resume):
     exp_header = list(dedupe(exp_header_list))
     return exp_header
 
-exp_header = find_exp_header(resume)
-exp_header = (exp_header[0], resume.find(exp_header[0]))
+
 
 #Find next section header
-def find_next_section (resume):
+def find_next_section (resume,exp_header):
     #Find all capitalized words
     next_section_upper = re.findall(r'([A-Z]{3,}( [A-Z]+)?( [A-Z]+)?( [A-Z]+)?)',
                                    resume[(exp_header[1] + len(exp_header[0])+ 1):])
@@ -425,25 +441,23 @@ def find_next_section (resume):
     next_section_list = next_section_upper + next_section_lower
 
     #if one of the items matches items in section list, that item is the next section header
-    next_section=()
+    next_section = (0,0)
     for item in next_section_list:
-        if item in section_list and (resume[resume.find(item)+len(item)]=='\n' or resume[resume.find(item)-1]=='\n'):
+        if item in next_section_list and (resume[resume.find(item)+len(item)]=='\n' or resume[resume.find(item)-1]=='\n'):
             next_section = (item, resume.find(item))
             break
     return next_section
 
-next_section = find_next_section(resume)
 
 # Get the section of Work_Experience
-def get_workexp_section(resume):
+def get_workexp_section(resume,next_section,exp_header):
     if next_section:
         workexp_section = str(resume[(exp_header[1]+ len(exp_header[0])+ 1):next_section[1]])
     else:
         workexp_section = str(resume[(exp_header[1]+ len(exp_header[0])+ 1):])
     return workexp_section
 
-workexp_section = get_workexp_section(resume)
-workexp_section = workexp_section.split('\n')
+
 
 #Remove the detail and get the experience information
 def get_exp_info(work_exp):
@@ -452,27 +466,19 @@ def get_exp_info(work_exp):
     for i, sent in enumerate(work_exp):
         if sent != '':
             #Everything before the bullet will be put into one sentence, for one company
-            if not sent.startswith(('•','', u'\uf095', '§', '§')):
+            if not sent.startswith(('•','', u'\uf095', '§', '§','○')):
                 temp_str += sent + ' '
             else:
-                if not work_exp[i-1].startswith(('•','', u'\uf095', '§', '§')):
+                if not work_exp[i-1].startswith(('•','', u'\uf095', '§', '§','○')):
                     company_info.append(temp_str)
                     temp_str=''
     return company_info
 
-company_info = get_exp_info(workexp_section)
 
-#Print the company info
-for i, company in enumerate(company_info):
-    company = company.replace('\t', '')
-    print('\nCompany {}:'.format(i+1), company)
-
-nlp = spacy.load('en')
 
 #Parse company info components
-def extract_exp_info(company_info, filename):
+def extract_exp_info(company_info):
     count = 0
-    print(filename)
     for i, sent in enumerate(company_info):
         sent = sent.replace('\t', '')
         parsed_sent = nlp(sent)
@@ -492,39 +498,84 @@ def extract_exp_info(company_info, filename):
             elif token.ent_type_ =='':
                 if str(token).isalpha() and str(token) not in stopwords.words('english'):
                     role += ' ' + str(token)
-
-        print('Company: {}'.format(company))
-        print('Location: {}'.format(location))
-        print('Time: {}'.format(time))
-        print('Role: {}'.format(role))
-
-extract_exp_info(company_info, filename)
+        company_info  = {}
+        company_info['company'] = company
+        company_info['title'] = role
+        company_info['startDate'] = time
+        company_info['endDate'] = '2000-01-01'
+        company_info['experience'] = ''
+        company_info['summary'] = ''
+        return company_info
 
 
 #3. Extract Skills (Just Skills)
+def extract_all_skills(resume):
+    #Read the Skill_List.xlsx
 
-import nltk
-import pandas as pd
-import os
-import codecs
-from gensim.models import Phrases
-import re
+    data = pd.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing',"Skills.xlsx")), header=0)
+    skill_list = list(data['Skill Names'])
+    skill_list = set(skill_list)
+    skill_list= [skill.lower() for skill in skill_list]
 
-#Read the Skill_List.xlsx
-data = pd.read_excel("Skills.xlsx", header=0)
-skill_list = list(data['Skill Names'])
-skill_list = set(skill_list)
-skill_list= [skill.lower() for skill in skill_list]
+    filename ='all_text1.txt'
+    trained_resume_path = os.path.join('Trained Resumes', filename)
 
-filename ='all_text1.txt'
-trained_resume_path = os.path.join('Trained Resumes', filename)
+    resume_text = resume
+    special_characters = ['!','#', '$', '%','&','*','-', '/', '=','?',
+                          '^','.','_','`', '{', '|', '}','~', "'", ',', '(',')', ':', '•', '§' ]
+    unigram_resume = resume_processing(resume_text,special_characters)
 
-resume_text = open(trained_resume_path, 'r', encoding='utf_8').read()
-special_characters = ['!','#', '$', '%','&','*','-', '/', '=','?',
-                      '^','.','_','`', '{', '|', '}','~', "'", ',', '(',')', ':', '•', '§' ]
+    #Create bigram model
+    bigram_model_path = 'bigram_model'
 
+    bigram_model = Phrases(unigram_resume)
+    bigram_model.save(bigram_model_path)
+    bigram_resume = create_bigram(unigram_resume)
+    #Create trigram model
+    trigram_model_path = 'trigram_model'
+
+    trigram_model = Phrases(bigram_resume)
+    trigram_model.save(trigram_model_path)
+    trigram_resume = create_trigram(bigram_resume)
+    normalized_resume = normalize_words(trigram_resume)
+    labeled_words=[labeled_word(sentence,skill_list) for sentence in normalized_resume]
+    featuresets=[]
+    for labeled_sent in labeled_words:
+        unlabeled_sent = [word[0] for word in labeled_sent]
+        for i, (w, label) in enumerate(labeled_sent):
+            featuresets.append((extract_features(unlabeled_sent, i,skill_list), label))
+
+    #Save the features in a file
+    featuresets_file = 'features_file.txt'
+    file = open(featuresets_file, 'w', encoding='utf_8')
+    file.write('\n'.join('%s %s' % item for item in featuresets ))
+
+    size = int(len(featuresets)*0.1)
+    train_set = featuresets[size:]
+    test_set = featuresets[:size]
+
+    #Train the data with NaiveBayes model
+    classifier = nltk.NaiveBayesClassifier.train(train_set)
+
+    #Evaluate the accuracy
+    nltk.classify.accuracy(classifier, test_set)
+    skills =[]
+    for sent in normalized_resume:
+        for (i,_) in enumerate(sent):
+            if classifier.classify(extract_features(sent, i,skill_list))=='skill':
+                skills.append(sent[i])
+                extracted_skills = set(skills)
+    #print('Resume ',len(extracted_skills),'Skills: ', extracted_skills)
+    all_skills = []
+
+    for skills in extracted_skills:
+        skill_dict = {}
+        skill_dict['skill'] = skills
+        skill_dict['YearsOfExperience'] = 0
+        all_skills.append(skill_dict)
+    return all_skills
 # Processing text
-def resume_processing (resume_text):
+def resume_processing (resume_text,special_characters):
     #tokenize sentences
     resume_sents = nltk.sent_tokenize(resume_text)
 
@@ -540,35 +591,22 @@ def resume_processing (resume_text):
 
     return processed_resume
 
-unigram_resume = resume_processing(resume_text)
 
-#Create bigram model
-bigram_model_path = 'bigram_model'
-
-bigram_model = Phrases(unigram_resume)
-bigram_model.save(bigram_model_path)
 
 # Create bigram words
 def create_bigram (unigram_resume):
-    bigram_model = Phrases.load(bigram_model_path)
+    bigram_model = Phrases.load(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','bigram_model')))
     bigram_resume = [bigram_model[sentence] for sentence in unigram_resume]
     return bigram_resume
 
-bigram_resume = create_bigram(unigram_resume)
 
-#Create trigram model
-trigram_model_path = 'trigram_model'
-
-trigram_model = Phrases(bigram_resume)
-trigram_model.save(trigram_model_path)
 
 # Create trigram words
 def create_trigram (bigram_resume):
-    trigram_model = Phrases.load(trigram_model_path)
+    trigram_model = Phrases.load(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','trigram_model')))
     trigram_resume = [trigram_model[sentence] for sentence in bigram_resume]
     return trigram_resume
 
-trigram_resume = create_trigram(bigram_resume)
 
 #Normalize bigram/trigram words
 def normalize_words (trigram_resume):
@@ -578,10 +616,9 @@ def normalize_words (trigram_resume):
                 sentence[i] = re.sub('_', ' ', word)
     return trigram_resume
 
-normalized_resume = normalize_words(trigram_resume)
 
 #label skills in the resume
-def labeled_word (sentence):
+def labeled_word (sentence,skill_list):
     labels=[]
     for word in sentence:
         if word in skill_list:
@@ -590,32 +627,39 @@ def labeled_word (sentence):
             labels.append((word, 'not skill'))
     return labels
 
-labeled_words=[labeled_word(sentence) for sentence in normalized_resume]
 
 #Get 25 similar words based on word2vec model
-def similar_prob(word):
+def similar_prob(word,res2vec,skill_series):
     count = 0
-    terms = get_related_terms(word,25)
+    terms = get_related_terms(word,25,res2vec)
     for w in terms:
-        if skill_series.isin([w]).any():
+        if w in skill_series:
             count+=1
     return count/25
 
 #Check if the word is in skill clusters, based on KMeans algorithm
-def in_skill_cluster(word):
+def in_skill_cluster(word,skills):
     if word in skills:
         return True
     return False
 
+def get_related_terms(token,topn,res2vec):
+    arr =[]
+    for word,similar in res2vec.wv.most_similar(positive = [token],topn=topn):
+        #print(word,':',round(similar,3))
+        arr.append(word)
+    return arr
 #extract featurres of skills
-def extract_features (sentence, i):
+def extract_features (sentence, i,skill_list):
+    res2vec = Word2Vec.load(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','vector_models')))
+    res2vec.init_sims()
     features={}
     #first feature: evaluate if that word is in skill list
     features["({})in_skill_list".format(sentence[i])]= (sentence[i] in skill_list)
 
     if sentence[i] in res2vec.wv.vocab:
-        features["probality_of_similar_words_skills"] = similar_prob(sentence[i])
-        features["in_skill_cluster"] = in_skill_cluster(sentence[i])
+        features["probality_of_similar_words_skills"] = similar_prob(sentence[i],res2vec,skill_list)
+        features["in_skill_cluster"] = in_skill_cluster(sentence[i],skill_list)
 
     #if the word is in begining of the sentence, return <Start> for prev_word
     if i==0 and len(sentence)-1 != 0:
@@ -636,36 +680,9 @@ def extract_features (sentence, i):
         features["next_word_in_skill_list"]= (sentence[i+1] in skill_list)
     return features
 
-featuresets=[]
-for labeled_sent in labeled_words:
-    unlabeled_sent = [word[0] for word in labeled_sent]
-    for i, (w, label) in enumerate(labeled_sent):
-        featuresets.append((extract_features(unlabeled_sent, i), label))
 
-#Save the features in a file
-featuresets_file = 'features_file.txt'
-file = open(featuresets_file, 'w', encoding='utf_8')
-file.write('\n'.join('%s %s' % item for item in featuresets ))
-
-size = int(len(featuresets)*0.1)
-train_set = featuresets[size:]
-test_set = featuresets[:size]
-
-#Train the data with NaiveBayes model
-classifier = nltk.NaiveBayesClassifier.train(train_set)
-
-#Evaluate the accuracy
-nltk.classify.accuracy(classifier, test_set)
 
 #Extract the skills
-def extract_skills(normalized_test_res, resume_number, filename):
-    skills =[]
-    for sent in normalized_test_res:
-        for (i,_) in enumerate(sent):
-            if classifier.classify(extract_features(sent, i))=='skill':
-                skills.append(sent[i])
-                extracted_skills = set(skills)
-    print('\nResume {}:{} ({} skills)\n'.format(resume_number+1,filename, len(extracted_skills)), extracted_skills)
 
 
 #VAIBHAV
@@ -712,7 +729,7 @@ def check_linkedin(string_to_search):
                 result=result.group()
                 return result
             except:
-                return None
+                return ''
 
 #GitHub Address (Finished)
 def check_GitHub(string_to_search):
@@ -723,7 +740,7 @@ def check_GitHub(string_to_search):
         result = result.group()
         return result
     except:
-        return None
+        return ""
 
 #Contact Number (Finished)
 def check_phone_number(string_to_search):
@@ -744,28 +761,11 @@ def check_phone_number(string_to_search):
     except:
         return None
 
-def main():
-#    with open('Resume_Test.txt', 'r',encoding="utf8") as myfile:
-    with open('Resume_Test.txt', 'r') as myfile:
-        data=myfile.read().replace('\n',' **** ')
-    result=check_email(data)
-    result_L=check_linkedin(data)
-    result_P=check_phone_number(data)
-    result_G=check_GitHub(data)
-    print("Email Address:",result)
-    print("Contact Number:",result_P)
-    print("Linkedin Profile:",result_L)
-    print("GitHub Profile:",result_G)
-    #print(data)
-main()
 
 
 #Ashish (LinkedIn Profiles and Every other URL in the file)
 
 # import all headers
-import re
-import os
-
 # function to extract all URLs
 # implemented using regex
 def extract_URLs(parsedResume):
@@ -788,17 +788,3 @@ def extract_linkedin(parsedResume):
 
 # TESTING
 # path where all resumes are located
-test_resume_path = '/Users/Ashish/Desktop/Internship/Personal/Test Resumes'
-counter = 0
-
-print("URLs in Test Resumes")
-for filename in os.listdir(test_resume_path):
-    # print(filename)
-    if '.txt' in filename:
-        counter = counter + 1
-        resume_path= os.path.join('Test Resumes', filename)
-        test_resume = open(resume_path, 'r').read()
-
-        print("Resume ", (counter), ":")
-        print("All URLs => ", extract_URLs(test_resume))
-        print("LinkedIn Profiles => ", extract_linkedin(test_resume))

@@ -31,7 +31,6 @@ urlpatterns = [
     url(r'^edit/(?P<person_id>\d+)/$', views.person_edit, name='person-edit'),
     url(r'^LA/$', linkanalysis, name='LA'),
     url(r'^logout/$', views.logout_page, name = 'logout'),
-
     #Search/Export Team
     url(r'^search/person_detail/(?P<pk>[0-9]+)/$', views.detail, name='detail'),
 

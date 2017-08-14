@@ -23,7 +23,7 @@ from django.db.models import Q
 from RSR.persondetails import Detail
 from RSR.persondetails2 import Detail2
 from django.views.generic.edit import UpdateView
-
+from .parsing import *
 
 ### json Parsing ##
 import json
@@ -101,47 +101,47 @@ def uploaddoc(request):
             #    print (temp_doc.docfile.wordstr)
             #    temp_doc.save(update_fields=['wordstr'])
 
-            parsed_json  = parse_file(temp_do.docfile.wordstr)
+            parsed_json  = parse_file(temp_doc.docfile.wordstr)
             #json testing#
             #check for json file, wont be needed as parsing will return json#
-            if ".json" in temp_doc.docfile.path:
+            if 1==1:
                 #either load json, or recieve json file
-                js = json.load(open(temp_doc.docfile.path))
+                js = parsed_json
                 #iterate through json file
+                print('\n\n',js,'\n\n')
 
                 #initialize person out side of for loop/if statements so we can use it later
                 person = Person(Name="temp")
+                for key in js['person']:
+                    if key == "name":
+                        person.Name = js['person'][key]
+                    elif key == "email":
+                        person.Email = js['person'][key]
+                    elif key == "address":
+                        person.Address = js['person'][key]
+                    elif key == "zipcode":
+                        person.ZipCode = js['person'][key]
+                    elif key == "state":
+                        person.State = js['person'][key]
+                    elif key == "phone":
+                        person.PhoneNumber = js['person'][key]
+                    elif key == "linkedin":
+                        person.Linkedin = js['person'][key]
+                    elif key == "github":
+                        person.GitHub = js['person'][key]
+                person.Resume = temp_doc.docfile
+                person.TypeResume = temp_doc.type
+                person.save()
                 for label in js:
-
+                    print(label)
                     #Checking Labels to see which table to create
-                    if label == "person":
-                        for key in js[label]:
-                            if key == "name":
-                                person.Name = js[label][key]
-                            elif key == "email":
-                                person.Email = js[label][key]
-                            elif key == "address":
-                                person.Address = js[label][key]
-                            elif key == "zipcode":
-                                person.ZipCode = js[label][key]
-                            elif key == "state":
-                                person.State = js[label][key]
-                            elif key == "phone":
-                                person.PhoneNumber = js[label][key]
-                            elif key == "linkedin":
-                                person.Linkedin = js[label][key]
-                            elif key == "github":
-                                person.GitHub = js[label][key]
-                        person.Resume = temp_doc.docfile
-                        person.TypeResume = temp_doc.type
-                        person.save()
 
-
-                    elif label == "skills":
+                    if label == "skills":
                         for key in js[label]:
                             #check to see if skill exists
                             query_set=Skills.objects.all()
                             query_set=query_set.filter(Name__icontains=key["skill"])
+                            print('SKILLS: ',query_set)
                             #if skill does not exist create skill
                             if not query_set:
                                 query_set = Skills(Name = key["skill"])
@@ -149,6 +149,7 @@ def uploaddoc(request):
                             #if skill does exist, grab first match from queryset
                             else:
                                 query_set = query_set[0]
+                            #person.save(commit = False)
                             skill_to_person = PersonToSkills(SkillsID = query_set, PersonID = person,YearsOfExperience = key["YearsOfExperience"])
                             skill_to_person.save()
 
@@ -165,6 +166,7 @@ def uploaddoc(request):
                             else:
                                 query_set = query_set[0]
                             #intermediary table stuff
+                            person.save(commit = False)
                             company_to_person = PersonToCompany(CompanyID = query_set, PersonID = person,
                                 Title = key["title"],
                                 ExperienceOnJob = key["experience"],
@@ -197,6 +199,7 @@ def uploaddoc(request):
                                 query_set_1 = query_set_1[0]
 
                             #intermediary table stuff
+                            #person.save(commit = False)
                             ed_to_person = PersonToSchool(SchoolID = query_set, PersonID = person, MajorID = query_set_1,
                                 GPA = key["GPA"],
                                 GradDate = key["gradDate"])
@@ -216,6 +219,7 @@ def uploaddoc(request):
                             else:
                                 query_set = query_set[0]
                             #intermediary table stuff
+                            person.save(commit = False)
                             project_to_person = PersonToSide(SideID = query_set, PersonID = person, Desc = key["description"])
                             project_to_person.save()
 
@@ -232,6 +236,7 @@ def uploaddoc(request):
                             else:
                                 query_set = query_set[0]
                             #intermediary table stuff
+                            person.save(commit = False)
                             awards_to_person = PersonToAwards(AwardID = query_set, PersonID = person, Desc = key["description"])
                             awards_to_person.save()
 
@@ -259,6 +264,7 @@ def uploaddoc(request):
                             else:
                                 query_set = query_set[0]
                             # intermediary table stuff
+                            person.save(commit = False)
                             language_to_person = PersonToLanguage(LangID=query_set, PersonID=person)
                             language_to_person.save()
 
@@ -275,6 +281,7 @@ def uploaddoc(request):
                             else:
                                 query_set = query_set[0]
                             # intermediary table stuff
+                            person.save(commit = False)
                             club_to_person = PersonToClubs_Hobbies(CHID=query_set, PersonID=person, Desc=key["description"])
                             club_to_person.save()
 
@@ -291,6 +298,7 @@ def uploaddoc(request):
                             else:
                                 query_set = query_set[0]
                             # intermediary table stuff
+                            person.save(commit = False)
                             volunteer_to_person = PersonToVolunteering(VolunID=query_set, PersonID=person, Desc=key["description"])
                             volunteer_to_person.save()
 
@@ -307,6 +315,7 @@ def uploaddoc(request):
                             else:
                                 query_set = query_set[0]
                             # intermediary table stuff
+                            person.save(commit = False)
                             course_to_person = PersonToCourse(CourseID=query_set, PersonID=person,Desc=key["description"])
                             course_to_person.save()
 
@@ -571,5 +580,3 @@ def listdelete(request, template_name='uploadlist.html'):
 def parse_word_file(filepath):
 	parsed_string = docx2txt.process(filepath)
 	return parsed_string
-def parse_file(res_string):
-    return 1
