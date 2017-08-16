@@ -527,18 +527,10 @@ def extract_all_skills(resume):
     special_characters = ['!','#', '$', '%','&','*','-', '/', '=','?',
                           '^','.','_','`', '{', '|', '}','~', "'", ',', '(',')', ':', '•', '§' ]
     unigram_resume = resume_processing(resume_text,special_characters)
-
+    print('time1')
     #Create bigram model
-    bigram_model_path = 'bigram_model'
-
-    bigram_model = Phrases(unigram_resume)
-    bigram_model.save(bigram_model_path)
     bigram_resume = create_bigram(unigram_resume)
     #Create trigram model
-    trigram_model_path = 'trigram_model'
-
-    trigram_model = Phrases(bigram_resume)
-    trigram_model.save(trigram_model_path)
     trigram_resume = create_trigram(bigram_resume)
     normalized_resume = normalize_words(trigram_resume)
     labeled_words=[labeled_word(sentence,skill_list) for sentence in normalized_resume]
@@ -547,7 +539,7 @@ def extract_all_skills(resume):
         unlabeled_sent = [word[0] for word in labeled_sent]
         for i, (w, label) in enumerate(labeled_sent):
             featuresets.append((extract_features(unlabeled_sent, i,skill_list), label))
-
+    print('time2')
     #Save the features in a file
     featuresets_file = 'features_file.txt'
     file = open(featuresets_file, 'w', encoding='utf_8')
@@ -599,6 +591,7 @@ def resume_processing (resume_text,special_characters):
 # Create bigram words
 def create_bigram (unigram_resume):
     bigram_model = Phrases.load(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','bigram_model')))
+    bigram_model.add_vocab(unigram_resume)
     bigram_resume = [bigram_model[sentence] for sentence in unigram_resume]
     return bigram_resume
 
@@ -607,6 +600,7 @@ def create_bigram (unigram_resume):
 # Create trigram words
 def create_trigram (bigram_resume):
     trigram_model = Phrases.load(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','trigram_model')))
+    trigram_model.add_vocab(bigram_resume)
     trigram_resume = [trigram_model[sentence] for sentence in bigram_resume]
     return trigram_resume
 
