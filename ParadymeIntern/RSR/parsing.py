@@ -591,7 +591,7 @@ def resume_processing (resume_text,special_characters):
 # Create bigram words
 def create_bigram (unigram_resume):
     bigram_model = Phrases.load(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','bigram_model')))
-    bigram_model.add_vocab(unigram_resume)
+    #bigram_model.add_vocab(unigram_resume)
     bigram_resume = [bigram_model[sentence] for sentence in unigram_resume]
     return bigram_resume
 
@@ -600,7 +600,7 @@ def create_bigram (unigram_resume):
 # Create trigram words
 def create_trigram (bigram_resume):
     trigram_model = Phrases.load(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','trigram_model')))
-    trigram_model.add_vocab(bigram_resume)
+    #trigram_model.add_vocab(bigram_resume)
     trigram_resume = [trigram_model[sentence] for sentence in bigram_resume]
     return trigram_resume
 
