@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'images',
     'crispy_forms',
+    'background_task',
 ]
 
 MIDDLEWARE = [

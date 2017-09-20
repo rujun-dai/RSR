@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 import os
 
@@ -27,10 +28,6 @@ class Document(models.Model):
     type = models.CharField(max_length=128)
     uploaduser = models.CharField(max_length=128)
     wordstr = models.TextField()
-
-
-
-
 
 class Person(models.Model):
     def get_absolute_url(self):
@@ -102,7 +99,6 @@ class OCR(models.Model):
     CreatedBy = models.ForeignKey(settings.AUTH_USER_MODEL)
     NewPath = models.ForeignKey(Person, blank=True, null=True)
 
-
 class Major(models.Model):
     Major_Choices = (('Major', 'Major'),
         ('Minor', 'Minor')
@@ -116,7 +112,7 @@ class Major(models.Model):
         '''for field in self._meta.get_fields(include_parents=True, include_hidden=False):
             value = getattr(self, field.name, None)
             yield (field, value)'''
-        for field in self._meta.fields:
+        for field in self._meta.get_fields(include_parents=True, inclue_hidden=False):
             field_name = field.get_attname()
             field_name_1 = field.verbose_name
             # In self._meta.fields for foreign key it returns field_name +"_id" so I just removed id so we get the value
@@ -155,7 +151,6 @@ class School(models.Model):
     Name = models.CharField("School", max_length=50,default = "None")
     DegreeLevel = models.CharField("Degree Level", max_length=50, choices = DEGREELEVEL_CHOICES, default = 'Undergraduate')
 
-
 class Coursework(models.Model):
     def get_absolute_url(self):
         return reverse('Coursework_detail', args=[str(self.id)])
@@ -170,8 +165,6 @@ class Coursework(models.Model):
 
     Name = models.CharField("Coursework", max_length=50)
 
-
-
 class ProfessionalDevelopment(models.Model):
     def get_absolute_url(self):
         return reverse('ProfessionalDevelopment_detail', args=[str(self.id)])
@@ -185,7 +178,6 @@ class ProfessionalDevelopment(models.Model):
             yield (field, value)
 
     Name = models.CharField("Professional Development", max_length=20,default = "None")
-
 
 class SideProject(models.Model):
     def get_absolute_url(self):
@@ -359,7 +351,7 @@ class PersonToSkills(models.Model):
 
     def __str__(self):
         return self.PersonID.Name + ' - ' + self.SkillsID.Name
-    YearsOfExperience = models.CharField("Years Of Experience", max_length=3)
+    YearsOfExperience = models.CharField("Years Of Experience", max_length=3,default = 1)
     SkillsID = models.ForeignKey(Skills,  on_delete=models.CASCADE)
     PersonID = models.ForeignKey(Person,  on_delete=models.CASCADE)
 
@@ -392,13 +384,3 @@ class PersonToSchool(models.Model):
     GPA = models.FloatField("GPA", max_length=20,default = "None")
     PersonID = models.ForeignKey(Person,  on_delete=models.CASCADE)
     MajorID = models.ForeignKey(Major,  on_delete=models.CASCADE)
-
-
-
-# tina pull request delete functions
-# @receiver(models.signals.post_delete, sender=Document)
-# def auto_delete_file_on_delete(sender, instance, **kwargs):
-
-# if instance.file:
-# if os.path.isfile(instance.file.path):
-#   os.remove(instance.file.path)

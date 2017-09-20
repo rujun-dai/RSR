@@ -22,17 +22,19 @@ from gensim.models import Word2Vec
 import json
 import re
 
+#main function goes through all different extraction and puts it into a dictionary so it can be put into the database
 def parse_file(resume):
-
+    print(resume)
     parsed = {}
     #execution of extracting name, email, phone number
     parsed['person'] = personel_information(resume)
+    #extract major minor of undergrad need work on grad
     parsed['education'] = extract_School(resume)
+    #extract companies and work experience but needs a lot of work
     parsed['work'] = extract_company(resume)
+    #extracts skills really well but takes time
     parsed['skills'] = extract_all_skills(resume)
-    print('EDUCATION: ',parsed['education'])
     return parsed
-#Eric’s section (name, email, phone, university, major, gpa) Done
 
 
 #extract name finished
@@ -40,13 +42,11 @@ def extract_first_name(resume):
     name = resume.split('\n', 1)[0]
     first_name = name.split(' ', 1)[0]
     return (first_name)
-    print (first_name)
 
 def extract_last_name(resume):
     name = resume.split('\n', 1)[0]
     last_name = name.split(' ', 1)[-1]
     return (last_name)
-    print (last_name)
 
 def extract_name(resume):
     name = extract_first_name(resume) + extract_last_name(resume)
@@ -61,7 +61,6 @@ def extract_email(resume):
     return result
 
 #extract phone number finished
-
 def check_phone_number1(resume):
     resume2 = "".join(c for c in resume if c not in ('!','.','-','(',')',' ','+',))
     result = re.findall(r"\d{10}", resume2)
@@ -78,12 +77,10 @@ def check_phone_number2(resume):
 def extract_phone_number(resume):
     try:
         return check_phone_number1(resume)
-        print (check_phone_number1(resume))
     except:
         return check_phone_number2(resume)
-        print (check_phone_number2(resume))
 
-
+#aux function to get all personel information
 def personel_information(resume):
     personel = {}
     resume_file = resume
@@ -98,10 +95,10 @@ def personel_information(resume):
     #print(check_email(resume))
     personel['linkedin'] = check_linkedin(resume)
     #print(check_phone_number(resume))
-    print('URLs: ',extract_URLs(resume))
+    #print('URLs: ',extract_URLs(resume))
     return personel
 
-
+#gets the school
 def extract_School(resume):
     resume_file = resume
     resume_file2 = resume_file.lower()
@@ -163,7 +160,7 @@ def extract_School(resume):
     school['gradDate'] = 'Jan 2012'
     GPA = extract_GPA(resume_file)
     if GPA != None:
-        school['GPA'] =GPA
+        school['GPA'] = GPA
     else:
         school['GPA'] = 0
 
@@ -540,10 +537,6 @@ def extract_all_skills(resume):
         for i, (w, label) in enumerate(labeled_sent):
             featuresets.append((extract_features(unlabeled_sent, i,skill_list), label))
     print('time2')
-    #Save the features in a file
-    featuresets_file = 'features_file.txt'
-    file = open(featuresets_file, 'w', encoding='utf_8')
-    file.write('\n'.join('%s %s' % item for item in featuresets ))
 
     size = int(len(featuresets)*0.1)
     train_set = featuresets[size:]

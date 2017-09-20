@@ -35,14 +35,7 @@
     {% load widget_tweaks %}
 
 
-    <div class = body>
-        <h1 style = "font-family: Raleway, Arial">Resume Filter System</h1>
-
-
-          <form action="" method="Get" class = "searchform cf">
-
-            <br/>
-            <!--  Hide Show filters -->
+        <h1>Resume Filter System</h1>
         <br/>
         <!--  Hide Show filters -->
             <a href="#search-div" class="btn btn-default" data-toggle="collapse">Advanced Search</a>
@@ -114,7 +107,6 @@
                     Language Spoken:
                     {% render_field personFilter.form.Language class="form-control" %}
                 </div>
-
                 <div class="form-group col-sm-3 col-md-3">
                     Awards:
                     {% render_field personFilter.form.Award class="form-control" %}
@@ -142,46 +134,37 @@
 <div class="row">
                 <fieldset>
                 <legend style="color:#FFF">Clearance</legend>
-
-
-
-                <div class="form-group col-sm-12 col-md-12">
+                <div class="form-group col-sm-4 col-md-3">
                     Security Clearance:
-                    {% render_field personFilter.form.SecurityClearance class="form-control" style=" width: 300px; margin:auto;"%}
-
+                    {% render_field personFilter.form.SecurityClearance class="form-control" %}
+                </div>
+                <div class="form-group col-sm-4 col-md-3">
+                    Work Authorization:
+                    {% render_field personFilter.form.WorkAuthorization class="form-control" %}
                 </div>
                 </fieldset>
-				</div>
+            </div>
 
-				 <div class = "row">
+             <div class="row">
                 <fieldset>
                 <legend style="color:#FFF">Extracurricular</legend>
-				 <div class="form-group col-sm-6 col-md-6">
-					Volunteering:
-                    {% render_field personFilter.form.Volunteering class="form-control" style=" width: 300px; margin:auto;"%}
-                 </div>
-                 <div class="form-group col-sm-6 col-md-6">
-                     Club:
-                     {% render_field personFilter.form.Club_Hobby class="form-control" style=" width: 300px; margin:auto;"%}
-                  </div>
-				  </fieldset>
-				  </div>
-
-
-            <p></p>
-            <div align="center">
-
-              <input class="button-style" type="submit" formaction="{% url 'RSR:search' %}" value="Search"/>
-
-              <input class="button-style" type="submit" formaction="{% url 'RSR:LA' %}" value="Link Analysis"/>
-            </div>
-        <br/>
-        </div>
-
+                <div class="form-group col-sm-4 col-md-3">
+                    Volunteering:
+                    {% render_field personFilter.form.Volunteering class="form-control" %}
+                </div>
+                <div class="form-group col-sm-4 col-md-3">
+                    Club:
+                    {% render_field personFilter.form.Club_Hobby class="form-control" %}
+                </div>
+                </fieldset>
+             </div>
 
 
             <div align="center">
                 <br/>
+            <button type="submit" class="button-style">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
         </div>
     </form>
     </div>
