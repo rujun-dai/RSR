@@ -28,9 +28,11 @@ urlpatterns = [
     url(r'^listdelete/$', listdelete, name="listdelete"),
     url(r'^main/$', main, name = 'main'),
     url(r'^search/$', search, name='search'),
-
     #Edit page
     url(r'^edit/(?P<person_id>\d+)/$', views.person_edit, name='person-edit'),
+    #url(r'^LA/$', linkanalysis, name='LA'),
+    url(r'^logout/$', views.logout_page, name = 'logout'),
+    #Search/Export Team
     url(r'^edit_skill/(?P<skill_id>\d+)/$', views.skill_edit, name='skill-edit'),
     url(r'^edit_company/(?P<company_id>\d+)/$', views.company_edit, name='company-edit'),
     url(r'^edit_school/(?P<school_id>\d+)/$', views.school_edit, name='school-edit'),
@@ -78,8 +80,5 @@ urlpatterns = [
     url(r'^search/Language-autocomplete/$', Languageautocomplete.as_view(),
         name='LanguageSpoken-autocomplete',),
         #url for autocomplete function for Company class
-    url(r'^search/Company-autocomplete/$', Companyautocomplete.as_view(),
-        name='Company-autocomplete',)
-
-
+    url(r'^search/Company-autocomplete/$', Companyautocomplete.as_view(), name='Company-autocomplete',),
 ]
