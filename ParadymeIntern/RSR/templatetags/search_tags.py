@@ -25,9 +25,9 @@ def get_key(dictionary, key):
     for value in dictionary.get(key):
         if num_results<10:
             if result == "":
-                result+=re.sub(r'^[a-zA-Z0-9_/ ]','',str(value))
+                result+=re.sub(r'[^a-zA-Z0-9_/, \-]','',str(value))
             else:
-                result+=", "+re.sub(r'^[a-zA-Z0-9_/ ]','',str(value))
+                result+=", "+re.sub(r'[^a-zA-Z0-9_/, \-]','',str(value))
             num_results+=1
         else:
             result+=", ..."

@@ -994,7 +994,7 @@ class ProfessionalDevelopmentAutocomplete(autocomplete.Select2QuerySetView):
         qs = ProfessionalDevelopment.order_by('Name').distinct()
 
         if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
+            qs = qs.filter(Name__icontains=self.q)
         return qs
 
 class Skillsutocomplete(autocomplete.Select2QuerySetView):
@@ -1003,7 +1003,7 @@ class Skillsutocomplete(autocomplete.Select2QuerySetView):
         qs = Skills.objects.order_by('Name').distinct()
 
         if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
+            qs = qs.filter(Name__icontains=self.q)
         return qs
 
 class Volunteeringautocomplete(autocomplete.Select2QuerySetView):
@@ -1011,7 +1011,7 @@ class Volunteeringautocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Volunteering.objects.order_by('Name').distinct()
         if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
+            qs = qs.filter(Name__icontains=self.q)
         return qs
 
 class SearchBarautocomplete(autocomplete.Select2QuerySetView):
@@ -1019,7 +1019,7 @@ class SearchBarautocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Person.objects.order_by('Name').distinct()
         if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
+            qs = qs.filter(Name__icontains=self.q)
         return qs
 
 class Languageautocomplete(autocomplete.Select2QuerySetView):
@@ -1027,7 +1027,7 @@ class Languageautocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = LanguageSpoken.objects.order_by('Language').distinct()
         if self.q:
-            qs = qs.filter(Language__istartswith=self.q)
+            qs = qs.filter(Language__icontains=self.q)
         return qs
 
 class Companyautocomplete(autocomplete.Select2QuerySetView):
@@ -1035,7 +1035,7 @@ class Companyautocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Company.objects.order_by('Name').distinct()
         if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
+            qs = qs.filter(Name__icontains=self.q)
         return qs
 
 #OCR's Search. REGEX ON RESUME TEXT
