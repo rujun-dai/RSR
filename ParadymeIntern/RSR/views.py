@@ -2,6 +2,12 @@
 from .models import *
 import docx2txt
 from django.utils import timezone
+from itertools import chain
+from gensim.models import Word2Vec
+from gensim.models import Phrases
+from gensim.models.word2vec import LineSentence
+
+import os
 
 # Create your views here.
 #=======
@@ -48,6 +54,10 @@ def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+def dashboard(request):
+    return render(request,'dashboard/barchart.html')
+
+
 @login_required
 def main(request):
     return render(request, 'main.html')
@@ -60,9 +70,39 @@ def get_string(name):
     return utf8_text
 
 
+def punct_space(token):
+    "helper that elimates puncations and whitespace"
+    return token.is_punct or token.is_space
+
+def line_review(filename):
+    "read resumes from the file and un-escapes orignal line break"
+    with codecs.open(filename,encoding='utf_8') as f:
+        for res in f:
+            yield res.replace('\\n','\n')
+
+def lemmatized_sentence_corpus(filename):
+    "use spacy to parse, lemmatize and yield sentences"
+    for parsed_res in nlp.pipe(line_review(filename),batch_size=10000,n_threads=3):
+        for sent in parsed_res.sents:
+            yield u' '.join([token.lemma_ for token in sent if not punct_space(token)])
+
+@background(schedule=timezone.now())
+def load_parsing_files():
+    normal_res  = ''
+    docs = Document.objects.all()
+    print(docs)
+    for doc in docs:
+        normal_res = normal_res + doc.wordstr
+    res2vec = Word2Vec(normal_res,size=300,window=10,sg=1,workers=4,min_count=5)
+    res2vec.save(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','vector_models1')))
+
+    for i in range(1,15):
+         res2vec.train(normal_res,total_examples=res2vec.corpus_count, epochs=res2vec.iter)
+         res2vec.save(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','vector_models1')))
+
 @background(schedule=timezone.now())
 def parse_back(words,doc,doc_type):
-    print('AFter',words,doc,doc_type)
+    print('After',words,doc,doc_type)
     parsed_json  = parse_file(words)
     #either load json, or recieve json file
     js = parsed_json
@@ -75,13 +115,25 @@ def parse_back(words,doc,doc_type):
         if key == "name":
             person.Name = js['person'][key]
         elif key == "email":
-            person.Email = js['person'][key]
+            if js['person'][key] == None:
+                person.Email = "Not parsed"
+            else:
+                person.Email = js['person'][key]
         elif key == "address":
-            person.Address = js['person'][key]
+            if js['person'][key] == None:
+                person.Address = "Not parsed"
+            else:
+                person.Address = js['person'][key]
         elif key == "zipcode":
-            person.ZipCode = js['person'][key]
+            if js['person'][key] == None:
+                person.ZipCode = "Not parsed"
+            else:
+                person.ZipCode = js['person'][key]
         elif key == "state":
-            person.State = js['person'][key]
+            if js['person'][key] == None:
+                person.State = 'Not Parsed'
+            else:
+                person.State = js['person'][key]
         elif key == "phone":
             person.PhoneNumber = js['person'][key]
         elif key == "linkedin":
@@ -112,6 +164,7 @@ def parse_back(words,doc,doc_type):
             for key in js[label]:
                 #check to see if company exists
                 query_set=Company.objects.all()
+
                 query_set=query_set.filter(Name=key["company"])
                 #if company does not exist create skill
                 if not query_set:
@@ -121,12 +174,11 @@ def parse_back(words,doc,doc_type):
                 else:
                     query_set = query_set[0]
                 #intermediary table stuff
-                person.save(commit = False)
                 company_to_person = PersonToCompany(CompanyID = query_set, PersonID = person,
                     Title = key["title"],
                     ExperienceOnJob = key["experience"],
-                    StartDate = key["startDate"],
-                    EndDate = key["endDate"],
+                    # StartDate = key["startDate"],
+                    # EndDate = key["endDate"],
                     Desc = key["summary"])
                 company_to_person.save()
 
@@ -308,7 +360,7 @@ def uploaddoc(request):
 
             else:
 
-                temp_doc.wordstr = textract.process(temp_doc.docfile.path)
+                temp_doc.wordstr = textract.process(temp_doc.docfile.path).decode("utf-8")
 
                 if len(temp_doc.wordstr) < 50:
                     img=IMG(filename=temp_doc.docfile.path,resolution=200)
@@ -316,14 +368,11 @@ def uploaddoc(request):
                     img.save(filename='temp.jpg')
                     utf8_text = get_string('temp.jpg')
                     os.remove('temp.jpg')
-
-                    print (utf8_text)
-                    temp_doc.wordstr = utf8_text
+                    temp_doc.wordstr = utf8_text.decode("utf-8")
                     temp_doc.save(update_fields=['wordstr'])
 
-                print (temp_doc.wordstr)
                 temp_doc.save(update_fields=['wordstr'])
-
+            print ('CHECK ME',type(temp_doc.wordstr))
             parse_back(temp_doc.wordstr,temp_doc.docfile.path,temp_doc.type)
     else:
         form = DocumentForm()
@@ -984,9 +1033,22 @@ def parse_word_file(filepath):
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='RSR').exists())
 def search(request):
+    arr = []
+    print(request.GET)
     query_set = Person.objects.order_by('Name').distinct()
     personFilter = PersonFilter(request.GET, query_set)
-    return render(request, 'SearchExport/search.html', {'personFilter': personFilter})
+    print(personFilter.qs)
+    if len(request.GET) != 0:
+        if request.GET['Skills']!='' and request.GET['YearOfExperienceForSkill']!='':
+            for p in personFilter.qs:
+                if len(PersonToSkills.objects.filter(PersonID = p.pk)\
+                    .filter(SkillsID =request.GET['Skills'])\
+                    .filter(YearsOfExperience = request.GET['YearOfExperienceForSkill'])) !=0:
+                    arr.append(p)
+        print('ARR',arr)
+    if len(arr)  == 0:
+        arr = list(personFilter.qs)
+    return render(request, 'SearchExport/search.html', {'personFilter': personFilter,'qs':arr})
 
 class ProfessionalDevelopmentAutocomplete(autocomplete.Select2QuerySetView):
     # autocomplete function for ProfessionalDevelopment class
