@@ -100,7 +100,7 @@ def load_parsing_files():
          res2vec.train(normal_res,total_examples=res2vec.corpus_count, epochs=res2vec.iter)
          res2vec.save(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','vector_models1')))
 
-@background(schedule=timezone.now())
+#@background(schedule=timezone.now())
 def parse_back(words,doc,doc_type):
     print('After',words,doc,doc_type)
     parsed_json  = parse_file(words)
@@ -1058,7 +1058,15 @@ class ProfessionalDevelopmentAutocomplete(autocomplete.Select2QuerySetView):
         if self.q:
             qs = qs.filter(Name__istartswith=self.q)
         return qs
+class NameAutocomplete(autocomplete.Select2QuerySetView):
+	def get_queryset(self):
+		#qs = Intern.objects.order_by('FName').distinct()
+		qs = Person.objects.all()
+		if self.q:
+		#qs = qs.filter(FName__exact='Sam')
 
+			qs = (qs.filter(Name__istartswith=self.q))
+		return qs
 class Skillsutocomplete(autocomplete.Select2QuerySetView):
     # autocomplete function for Skills class
     def get_queryset(self):

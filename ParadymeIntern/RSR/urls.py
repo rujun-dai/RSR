@@ -20,6 +20,8 @@ from RSR.views import *
 from rest_framework import routers, serializers, viewsets
 from .api import *
 from RSR import api
+from django.views import generic
+
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'person', PersonViewSet)
@@ -87,11 +89,12 @@ urlpatterns = [
         name='LanguageSpoken-autocomplete',),
         #url for autocomplete function for Company class
     url(r'^search/Company-autocomplete/$', Companyautocomplete.as_view(), name='Company-autocomplete',),
+    url(r'^search/Name-autocomplete/$', NameAutocomplete.as_view(), name='Name-autocomplete',),
 
     url(r'dashboard', dashboard, name='dashboard'),
     url(r'^', include(router.urls)),
-    url(r'^skills/count/$', api.SkillCount.as_view(), name='skill-count')
-
+    url(r'^skills/count/$', api.SkillCount.as_view(), name='skill-count'),
+    url(r'^react/$',generic.TemplateView.as_view(template_name='react_test.html'))
 
 
 ]

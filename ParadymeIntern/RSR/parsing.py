@@ -22,7 +22,7 @@ from gensim.models import Word2Vec
 import json
 import re
 from datetime import date, datetime
-
+import datefinder
 from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
@@ -128,7 +128,6 @@ def extract_School(resume,ent):
     resume_file = resume
     resume_file2 = resume_file.lower()
     major_df = pandas.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','majors.xlsx')))
-    major_df.columns
     major_file = major_df['Majors'].values
     major_lower = [item.lower() for item in major_file]
     tokenizer = RegexpTokenizer(r'\w+')
@@ -144,49 +143,32 @@ def extract_School(resume,ent):
     master_major_result = re.search(regular_expression_three, resume_file)
     regular_expression_four = re.compile(r"university", re.IGNORECASE)
     university_major_result = re.search(regular_expression_four, resume_file)
-    updated_majors1 = []
-    indexes_majors1 = []
-    updated_majors2 = []
-    indexes_majors2 = []
-    updated_majors3 = []
-    indexes_majors3 = []
-    updated_majors4 = []
-    indexes_majors4 = []
-    # university_df1 = pandas.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','China_University.xlsx')))
-    # university_df2 = pandas.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','India_University.xlsx')))
-    # university_df3 = pandas.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','US_University.xlsx')))
-    # university_file1 = university_df1['Universities'].values
-    # university_file2 = university_df2['Universities'].values
-    # university_file3 = university_df3['Universities'].values
-    # university_lower1 = [item.lower() for item in university_file1]
-    # university_lower2 = [item.lower() for item in university_file2]
-    # university_lower3 = [item.lower() for item in university_file3]
-    # university_combined = university_lower1 + university_lower2 + university_lower3
+
     get_majors(resume_token2, major_lower)
     get_majors2(resume_token2, major_lower,major_distinct)
     get_majors_index(major_distinct,resume_file2,dictionary)
     get_bach_index(bach_major_result,resume_file)
     get_minor_index(minor_result,resume_file)
     get_master_index(master_major_result,resume_file)
-    #get_university_index(university_major_result,resume_file)
-    print('BACH: ',get_bach_major(dictionary,resume_file,bach_major_result,updated_majors1,indexes_majors1))
-    print('MASTER: ',get_master_major(dictionary,resume_file,master_major_result,updated_majors2,indexes_majors2))
-    print('MINOR: ',get_minor(dictionary,resume_file,minor_result,updated_majors3,indexes_majors3))
-    print('What is this: ',get_university_major(dictionary,resume_file,university_major_result,updated_majors4,indexes_majors4))
-    print('UNI: ', extract_university_google(resume,ent))
-    print('GPA: ',extract_GPA(resume_file))
+
+    updated_majors4 = []
+    indexes_majors4 = []
     schools = []
     school = {}
     school_info = {}
     major_info = {}
-    school_temp = extract_university_google(resume,ent)
-    if len(school_temp)!=0:
-        school_info['name'] = school_temp[0]
+    temp_school = extract_university_date(resume_file,ent)
+    if len(temp_school)>0:
+        school_name,school_grad = temp_school[0]
+        print("ERIC CODE",temp_school)
+        school_info['name'] = school_name
+        school['gradDate'] = school_grad
     else:
         school_info['name'] = "Couldnt Parse"
+        school['gradDate'] = 'Couldnt Parse'
+
     school_info['degreeLevel'] = 'Undergraduate'
     school['school'] = school_info
-    school['gradDate'] = 'Jan 2012'
     GPA = extract_GPA(resume_file)
     if GPA != None:
         school['GPA'] = GPA
@@ -201,6 +183,90 @@ def extract_School(resume,ent):
     print('SCHOOL:  ',schools)
 
     return schools
+
+
+#extract date package:
+def extract_date(input_string):
+    # a generator will be returned by the datefinder module. I'm typecasting it to a list. Please read the note of caution provided at the bottom.
+    matches = list(datefinder.find_dates(input_string))
+    actual = []
+    for match in matches:
+        print("MATCH",match)
+        if input_string.find(str(match.year)) != -1:
+            actual.append(match)
+    if len(actual)>0:
+        return(actual[0])
+    else:
+        return ('No dates found')
+
+def extract_university_date(resume,ent):
+    university_list = extract_university_google(resume,ent)
+    University_Index = {'Name': 5}
+    for i, element in enumerate(university_list):
+        x = resume.find(element)
+        University_Index[element] = x
+
+    del University_Index['Name']
+    #print(University_Index)
+
+    university_upper_bound=[]
+    university_list=[]
+    for key, value in University_Index.items():
+        aValue = value
+        aKey = key
+        university_upper_bound.append(aValue)
+        university_list.append(aKey)
+    #print(university_upper_bound)
+
+    university_lower_bound=[]
+    for i in university_upper_bound:
+        i += 150
+        university_lower_bound.append(i)
+    #print (university_lower_bound)
+
+    block_index=[]
+    for i in range(0,len(university_upper_bound)):
+        block_index.append(university_upper_bound[i])
+        block_index.append(university_lower_bound[i])
+    #print (block_index)
+
+    index_pair = [(block_index[i],block_index[i+1]) for i in range(0,len(block_index),2)]
+    #print(index_pair)
+
+    sub_resume=[]
+    for i in range(0,len(index_pair)):
+        sub_resume.append(resume[index_pair[i][0]:index_pair[i][1]])
+    #print(sub_resume)
+    print("SUB RES:", sub_resume)
+    dates=[]
+    for i in sub_resume:
+        dates.append(extract_date(i))
+    #print (dates)
+    print('DATES',dates)
+    for i in range(0,len(dates)):
+        try:
+            dates[i]=dates[i].strftime('%B')+' '+str(dates[i].year)
+        except:
+            dates[i]="Could Not Parse"
+    # for i in range(0,len(dates)):
+    #     try:
+    #         dates[i]=dates[i][-4:]
+    #     except:
+    #         dates[i]=None
+    #print (dates)
+
+    university_with_year=[]
+    for i in range(0,len(dates)):
+        university_with_year.append(university_list[i])
+        university_with_year.append(dates[i])
+    #print (university_with_year)
+
+    university_year_pair=[(university_with_year[i],university_with_year[i+1]) for i in range(0,len(university_with_year),2)]
+    return (university_year_pair)
+
+
+
+
 #major, University, gpa
 def get_bigrams(input):
     n = 2
