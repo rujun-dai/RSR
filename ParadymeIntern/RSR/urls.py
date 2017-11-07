@@ -13,10 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from. import views
 from RSR.views import *
+from rest_framework import routers, serializers, viewsets
+from .api import *
+from RSR import api
+from django.views import generic
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'person', PersonViewSet)
 
 app_name = 'RSR'
 
@@ -81,4 +89,12 @@ urlpatterns = [
         name='LanguageSpoken-autocomplete',),
         #url for autocomplete function for Company class
     url(r'^search/Company-autocomplete/$', Companyautocomplete.as_view(), name='Company-autocomplete',),
+    url(r'^search/Name-autocomplete/$', NameAutocomplete.as_view(), name='Name-autocomplete',),
+
+    url(r'dashboard', dashboard, name='dashboard'),
+    url(r'^', include(router.urls)),
+    url(r'^skills/count/$', api.SkillCount.as_view(), name='skill-count'),
+    url(r'^react/$',generic.TemplateView.as_view(template_name='react_test.html'))
+
+
 ]

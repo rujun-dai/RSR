@@ -21,17 +21,42 @@ from gensim.models import Phrases
 from gensim.models import Word2Vec
 import json
 import re
+from datetime import date, datetime
+import datefinder
+from google.cloud import language
+from google.cloud.language import enums
+from google.cloud.language import types
+from google.cloud import language_v1beta2
+from google.cloud.language_v1beta2 import enums
+from google.cloud.language_v1beta2 import types
+
+from apiclient.discovery import build
+from oauth2client.service_account import ServiceAccountCredentials
+import httplib2
+from oauth2client import client
+from oauth2client import file
+from oauth2client import tools
+
 
 #main function goes through all different extraction and puts it into a dictionary so it can be put into the database
 def parse_file(resume):
-    print(resume)
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.path.join(os.path.dirname(__file__),'Parsing-385521996355.json')
+    print("WTF this was working yesterday",os.environ['GOOGLE_APPLICATION_CREDENTIALS'])
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(os.path.join(os.path.dirname(__file__),'Parsing-385521996355.json'), scopes='https://www.googleapis.com/auth/cloud-language')
+    #credentials = ServiceAccountCredentials.from_json_keyfile_name('/home/jared/Parsing-385521996355.json',scopes ='https://www.googleapis.com/auth/cloud-language' )
+    client = language_v1beta2.LanguageServiceClient()
+
+    document = types.Document(content = resume,type=enums.Document.Type.PLAIN_TEXT)
+    #categories = client.classify_text(document).categories
+    ent = client.analyze_entities(document=document).entities
+    #client = language.LanguageServiceClient()
     parsed = {}
     #execution of extracting name, email, phone number
     parsed['person'] = personel_information(resume)
     #extract major minor of undergrad need work on grad
-    parsed['education'] = extract_School(resume)
+    parsed['education'] = extract_School(resume,ent)
     #extract companies and work experience but needs a lot of work
-    parsed['work'] = extract_company(resume)
+    parsed['work'] = extract_company(resume,ent)
     #extracts skills really well but takes time
     parsed['skills'] = extract_all_skills(resume)
     return parsed
@@ -99,11 +124,10 @@ def personel_information(resume):
     return personel
 
 #gets the school
-def extract_School(resume):
+def extract_School(resume,ent):
     resume_file = resume
     resume_file2 = resume_file.lower()
     major_df = pandas.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','majors.xlsx')))
-    major_df.columns
     major_file = major_df['Majors'].values
     major_lower = [item.lower() for item in major_file]
     tokenizer = RegexpTokenizer(r'\w+')
@@ -119,45 +143,32 @@ def extract_School(resume):
     master_major_result = re.search(regular_expression_three, resume_file)
     regular_expression_four = re.compile(r"university", re.IGNORECASE)
     university_major_result = re.search(regular_expression_four, resume_file)
-    updated_majors1 = []
-    indexes_majors1 = []
-    updated_majors2 = []
-    indexes_majors2 = []
-    updated_majors3 = []
-    indexes_majors3 = []
-    updated_majors4 = []
-    indexes_majors4 = []
-    university_df1 = pandas.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','China_University.xlsx')))
-    university_df2 = pandas.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','India_University.xlsx')))
-    university_df3 = pandas.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','US_University.xlsx')))
-    university_file1 = university_df1['Universities'].values
-    university_file2 = university_df2['Universities'].values
-    university_file3 = university_df3['Universities'].values
-    university_lower1 = [item.lower() for item in university_file1]
-    university_lower2 = [item.lower() for item in university_file2]
-    university_lower3 = [item.lower() for item in university_file3]
-    university_combined = university_lower1 + university_lower2 + university_lower3
+
     get_majors(resume_token2, major_lower)
     get_majors2(resume_token2, major_lower,major_distinct)
     get_majors_index(major_distinct,resume_file2,dictionary)
     get_bach_index(bach_major_result,resume_file)
     get_minor_index(minor_result,resume_file)
     get_master_index(master_major_result,resume_file)
-    get_university_index(university_major_result,resume_file)
-    print('BACH: ',get_bach_major(dictionary,resume_file,bach_major_result,updated_majors1,indexes_majors1))
-    print('MASTER: ',get_master_major(dictionary,resume_file,master_major_result,updated_majors2,indexes_majors2))
-    print('MINOR: ',get_minor(dictionary,resume_file,minor_result,updated_majors3,indexes_majors3))
-    print('What is this: ',get_university_major(dictionary,resume_file,university_major_result,updated_majors4,indexes_majors4))
-    print('UNI: ',extract_university(resume_token2,university_combined))
-    print('GPA: ',extract_GPA(resume_file))
+
+    updated_majors4 = []
+    indexes_majors4 = []
     schools = []
     school = {}
     school_info = {}
     major_info = {}
-    school_info['name'] = extract_university(resume_token2,university_combined)
+    temp_school = extract_university_date(resume_file,ent)
+    if len(temp_school)>0:
+        school_name,school_grad = temp_school[0]
+        print("ERIC CODE",temp_school)
+        school_info['name'] = school_name
+        school['gradDate'] = school_grad
+    else:
+        school_info['name'] = "Couldnt Parse"
+        school['gradDate'] = 'Couldnt Parse'
+
     school_info['degreeLevel'] = 'Undergraduate'
     school['school'] = school_info
-    school['gradDate'] = 'Jan 2012'
     GPA = extract_GPA(resume_file)
     if GPA != None:
         school['GPA'] = GPA
@@ -172,6 +183,90 @@ def extract_School(resume):
     print('SCHOOL:  ',schools)
 
     return schools
+
+
+#extract date package:
+def extract_date(input_string):
+    # a generator will be returned by the datefinder module. I'm typecasting it to a list. Please read the note of caution provided at the bottom.
+    matches = list(datefinder.find_dates(input_string))
+    actual = []
+    for match in matches:
+        print("MATCH",match)
+        if input_string.find(str(match.year)) != -1:
+            actual.append(match)
+    if len(actual)>0:
+        return(actual[0])
+    else:
+        return ('No dates found')
+
+def extract_university_date(resume,ent):
+    university_list = extract_university_google(resume,ent)
+    University_Index = {'Name': 5}
+    for i, element in enumerate(university_list):
+        x = resume.find(element)
+        University_Index[element] = x
+
+    del University_Index['Name']
+    #print(University_Index)
+
+    university_upper_bound=[]
+    university_list=[]
+    for key, value in University_Index.items():
+        aValue = value
+        aKey = key
+        university_upper_bound.append(aValue)
+        university_list.append(aKey)
+    #print(university_upper_bound)
+
+    university_lower_bound=[]
+    for i in university_upper_bound:
+        i += 150
+        university_lower_bound.append(i)
+    #print (university_lower_bound)
+
+    block_index=[]
+    for i in range(0,len(university_upper_bound)):
+        block_index.append(university_upper_bound[i])
+        block_index.append(university_lower_bound[i])
+    #print (block_index)
+
+    index_pair = [(block_index[i],block_index[i+1]) for i in range(0,len(block_index),2)]
+    #print(index_pair)
+
+    sub_resume=[]
+    for i in range(0,len(index_pair)):
+        sub_resume.append(resume[index_pair[i][0]:index_pair[i][1]])
+    #print(sub_resume)
+    print("SUB RES:", sub_resume)
+    dates=[]
+    for i in sub_resume:
+        dates.append(extract_date(i))
+    #print (dates)
+    print('DATES',dates)
+    for i in range(0,len(dates)):
+        try:
+            dates[i]=dates[i].strftime('%B')+' '+str(dates[i].year)
+        except:
+            dates[i]="Could Not Parse"
+    # for i in range(0,len(dates)):
+    #     try:
+    #         dates[i]=dates[i][-4:]
+    #     except:
+    #         dates[i]=None
+    #print (dates)
+
+    university_with_year=[]
+    for i in range(0,len(dates)):
+        university_with_year.append(university_list[i])
+        university_with_year.append(dates[i])
+    #print (university_with_year)
+
+    university_year_pair=[(university_with_year[i],university_with_year[i+1]) for i in range(0,len(university_with_year),2)]
+    return (university_year_pair)
+
+
+
+
 #major, University, gpa
 def get_bigrams(input):
     n = 2
@@ -334,16 +429,44 @@ def get_university(a,b):
             resume_university.append(x)
     return (resume_university)
 
-def extract_university(resume_token_lower,university_combined):
-    unigram_university = get_university(resume_token_lower, university_combined)
-    bigram_university = get_university(get_bigrams(resume_token_lower), university_combined)
-    threegram_university = get_university(get_threegrams(resume_token_lower), university_combined)
-    fourgram_university = get_university(get_fourgrams(resume_token_lower), university_combined)
-    fivegram_university = get_university(get_fivegrams(resume_token_lower), university_combined)
-    sixgram_university = get_university(get_sixgrams(resume_token_lower), university_combined)
-    combined_university_extraction = list(bigram_university + threegram_university + fourgram_university + fivegram_university + sixgram_university)
-    print('UNI: ', bigram_university,threegram_university,fourgram_university)
-    return combined_university_extraction
+
+
+
+
+
+def extract_university_google(resume,entities):
+   # entity types from enums.Entity.Type
+    entity_type = ('UNKNOWN', 'PERSON', 'LOCATION', 'ORGANIZATION',
+                   'EVENT', 'WORK_OF_ART', 'CONSUMER_GOOD', 'OTHER')
+
+    string = []
+    for entity in entities:
+        #string.append('=' * 20)
+        string.append(u'{}: {}'.format(entity.name,entity_type[entity.type]))
+
+    list_of_organiations = string
+    list_of_schools=[]
+
+    for i in list_of_organiations:
+        if "ORGANIZATION"in i:
+            if ("University" or "School" or "College") in i:
+                list_of_schools.append(i)
+        #print(list_of_schools)
+
+    final_list_of_school = [x[:-14] for x in list_of_schools]
+    print("Schools:",final_list_of_school)
+    return final_list_of_school
+
+# def extract_university(resume_token_lower,university_combined):
+#     unigram_university = get_university(resume_token_lower, university_combined)
+#     bigram_university = get_university(get_bigrams(resume_token_lower), university_combined)
+#     threegram_university = get_university(get_threegrams(resume_token_lower), university_combined)
+#     fourgram_university = get_university(get_fourgrams(resume_token_lower), university_combined)
+#     fivegram_university = get_university(get_fivegrams(resume_token_lower), university_combined)
+#     sixgram_university = get_university(get_sixgrams(resume_token_lower), university_combined)
+#     combined_university_extraction = list(bigram_university + threegram_university + fourgram_university + fivegram_university + sixgram_university)
+#     print('UNI: ', bigram_university,threegram_university,fourgram_university)
+#     return combined_university_extraction
 
 #execution of extracting university:
 
@@ -388,29 +511,54 @@ import spacy
 from nltk.corpus import stopwords
 
 
-def extract_company(resume):
+def extract_company(resume,ent):
+    final = []
+    entity_type = ('UNKNOWN', 'PERSON', 'LOCATION', 'ORGANIZATION',
+   'EVENT', 'WORK_OF_ART', 'CONSUMER_GOOD', 'OTHER')
+    # google code for using there langauge library
 
-#Read the Work_Experience_List
+    #Read the Work_Experience_List
     data = pd.read_excel(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing',"Work Experience.xlsx")), header=0)
     experience_list = list(data['Example'])
     exp_header = find_exp_header(resume,experience_list)
+    if len(exp_header) == 0:
+        where_you_worked = {}
+        where_you_worked['company'] = 'could not parse'
+        where_you_worked['title'] = 'could not parse'
+        where_you_worked['experience'] = 'could not parse'
+        # where_you_worked['startDate'] = datetime.now().date
+        # where_you_worked['endDate'] = datetime.now().date
+        where_you_worked['summary'] =' could not parse'
+        return [where_you_worked]
+
     exp_header = (exp_header[0], resume.find(exp_header[0]))
+    print('Header',exp_header)
     next_section = find_next_section(resume,exp_header)
+    print('Next',next_section)
     workexp_section = get_workexp_section(resume,next_section,exp_header)
     workexp_section = workexp_section.split('\n')
-    company_info = get_exp_info(workexp_section)
+    print('Work Exp',workexp_section)
+#    for i in ent:
+#        print("Name", i.name)
+#        print('Type',entity_type[i.type])
+#        print("Wiki",i.metadata.get('wikipedia_url', '-'))
+#        print('\n\n')
+    company_info = get_exp_info(workexp_section,ent)
+    print('Names: ',company_info)
     #Print the company info
-    for i, company in enumerate(company_info):
-        company = company.replace('\t', '')
-        print('\nCompany {}:'.format(i+1), company)
+    for i in company_info:
+        where_you_worked = {}
+        print('Company is',i)
+        where_you_worked['company'] = i['company']
+        where_you_worked['title'] = 'Needs to be added'
+        where_you_worked['experience'] = 'Needs to be added'
+        # where_you_worked['startDate'] = datetime.now().date
+        # where_you_worked['endDate'] = datetime.now().date
+        where_you_worked['summary'] = i['summary']
+        final.append(where_you_worked)
 
-    nlp = spacy.load('en')
-    print('COMPANY: ',extract_exp_info(company_info))
-    comp = extract_exp_info(company_info)
-    if comp == None:
-        return []
-    else:
-        return comp
+    print('Work Exp',final)
+    return final
 
 #Find the experience header
 def find_exp_header (resume,experience_list):
@@ -460,52 +608,41 @@ def get_workexp_section(resume,next_section,exp_header):
 
 
 #Remove the detail and get the experience information
-def get_exp_info(work_exp):
-    company_info=[]
+def get_exp_info(work_exp,ent):
+    print('In get exp')
+    company_info= []
     temp_str=''
     for i, sent in enumerate(work_exp):
         if sent != '':
-            #Everything before the bullet will be put into one sentence, for one company
-            if not sent.startswith(('•','', u'\uf095', '§', '§','○')):
-                temp_str += sent + ' '
+            find_Dates = re.findall('\d{4}|9\d{1}|Present|present',sent)
+            if  len(find_Dates)>1:
+                comp = {}
+                comp['company'] = 'Could not parse'
+                for e in ent:
+                    if sent.find(e.name)!= -1:
+                        comp['company'] = e.name
+
+                print('Sent is',sent)
+                comp['summary']=temp_str
+                company_info.append(comp)
+                temp_str =''
             else:
-                if not work_exp[i-1].startswith(('•','', u'\uf095', '§', '§','○')):
-                    company_info.append(temp_str)
-                    temp_str=''
+                temp_str+= sent + ' '
+
+            #Everything before the bullet will be put into one sentence, for one company
+            # if not sent.startswith(('•','', u'\uf095', '§', '§','○')):
+            #     temp_str += sent + ' '
+            # else:
+            #     if not work_exp[i-1].startswith(('•','', u'\uf095', '§', '§','○','○')):
+            #         company_info.append(temp_str)
+            #         temp_str=''
+    print('Temp',temp_str)
+    print("Comapny info", company_info)
+    if len(company_info)!=0:
+        company_info[len(company_info)-1]['summary'] =temp_str
+    #del company_info[0]
     return company_info
 
-
-
-#Parse company info components
-def extract_exp_info(company_info):
-    count = 0
-    for i, sent in enumerate(company_info):
-        sent = sent.replace('\t', '')
-        parsed_sent = nlp(sent)
-        print('\nCompany {}'.format(i+1))
-
-        company=''
-        location=''
-        time=''
-        role=''
-        for i ,token in enumerate(parsed_sent):
-            if token.ent_type_ =='ORG':
-                company += ' ' + str(token)
-            elif token.ent_type_ =='GPE':
-                location += ' ' + str(token)
-            elif token.ent_type_ =='DATE' or token.ent_type_ =='TIME':
-                time += ' ' + str(token)
-            elif token.ent_type_ =='':
-                if str(token).isalpha() and str(token) not in stopwords.words('english'):
-                    role += ' ' + str(token)
-        company_info  = {}
-        company_info['company'] = company
-        company_info['title'] = role
-        company_info['startDate'] = time
-        company_info['endDate'] = '2000-01-01'
-        company_info['experience'] = ''
-        company_info['summary'] = ''
-        return company_info
 
 
 #3. Extract Skills (Just Skills)

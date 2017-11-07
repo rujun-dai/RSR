@@ -24,6 +24,20 @@ class UploadListFilter(django_filters.FilterSet):
 
 
 class PersonFilter(django_filters.FilterSet):
+
+    TYPERESUME_CHOICES = (('Employee', 'Employee'),
+    ('Intern', 'Intern'),
+    ('Prospective Employee', 'Prospective Employee'),
+    ('Prospective Intern', 'Prospective Intern'))
+
+    TypeResume = django_filters.ChoiceFilter(name='TypeResume', choices=TYPERESUME_CHOICES)
+
+    UploadDate = django_filters.DateFilter(name='CreationDate',input_formats=['%Y-%m-%d', '%m-%d-%Y', '%Y/%m/%d','%m/%d/%Y', '%Y%m%d', '%m%d%Y']\
+    , lookup_expr='icontains')
+
+    Name= django_filters.ModelChoiceFilter(name='Name', label='Name',queryset=Person.objects.all().order_by('Name'))
+
+
     SchoolAttend = django_filters.ModelChoiceFilter(name='persontoschool__SchoolID', queryset=School.objects.all().order_by('Name'),
                                                     to_field_name='id')
     #SchoolAttend = django_filters.ModelChoiceFilter(name='school__Name',
@@ -78,4 +92,4 @@ class PersonFilter(django_filters.FilterSet):
         model = Person
         fields = ['SchoolAttend', 'GraduateDate', 'Major', 'DegreeLevel', 'GPAlb', 'GPAub','Language', 'Skills',
                    'YearOfExperienceForSkill', 'ProfessionalDevelopment', 'Award', 'CompanyWorked', 'Title',
-                   'SecurityClearance', 'Volunteering', 'Club_Hobby']
+                   'SecurityClearance', 'Volunteering', 'Club_Hobby','TypeResume','UploadDate','Name']
