@@ -22,7 +22,7 @@
     <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
 </head>
 <style>
-   
+
     .select2-container {
     color:black !important;
     width: 100% !important;
@@ -33,7 +33,7 @@
 </style>
 <body>
     {% load widget_tweaks %}
-   
+
 
         <h1>Resume Filter System</h1>
         <br/>
@@ -47,10 +47,20 @@
     <form action="" method="Get">
 
             <div class="row">
+              <fieldset>
+                <legend style="color:#FFF">Personel</legend>
                 <!-- Search Bar -->
-                <div class="form-group col-sm-12 col-md-12">
-                Search Bar:
+                <div class="form-group col-sm-3 col-md-3">
+                Name:
                 {% render_field personFilter.form.Name class="form-control" %}
+                </div>
+                <div class="form-group col-sm-3 col-md-3">
+                Type:
+                {% render_field personFilter.form.TypeResume class="form-control" %}
+                </div>
+                <div class="form-group col-sm-3 col-md-3">
+                Upload Date:
+                {% render_field personFilter.form.UploadDate class="form-control" %}
                 </div>
             </div>
             <div class="row">
@@ -88,8 +98,8 @@
                     Coursework:
                     {% render_field personFilter.form.Coursework class="form-control" %}
                 </div>
-               
-                    
+
+
                 </fieldset>
                 </div>
             <div class = "row">
@@ -159,7 +169,7 @@
                 </fieldset>
              </div>
 
-             
+
             <div align="center">
                 <br/>
             <button type="submit" class="button-style">
@@ -192,11 +202,11 @@
 
    </thead>
    <tbody class="table-hover">
-     {% for obj in personFilter.qs %}
+     {% for obj in qs %}
        <tr>
          <td style = "padding:14px;"class = "text-left">{{obj.TypeResume}}</td>
          <td style = "padding:14px;"class = "text-left"> <a  style = "color:#ff7e00;"href="{% url 'RSR:detail' obj.pk %}">{{obj.Name}}</a></td>
-         <td style = "padding:14px;"class = "text-left"><a class = "button-style" href="{{ obj.Resume.url }}">View</a></td>     
+         <td style = "padding:14px;"class = "text-left"><a class = "button-style" href="{{ obj.Resume.url }}">View</a></td>
          <td style = "padding:14px;"class = "text-left">{{ obj.Email }}</td>
          <td style = "padding:14px;"class = "text-left">{{ obj.PhoneNumber }}</td>
            {% with obj|preview_details as detailsDict %}

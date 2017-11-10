@@ -13,10 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from. import views
 from RSR.views import *
+from rest_framework import routers, serializers, viewsets
+from .api import *
+from RSR import api
+from django.views import generic
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'person', PersonViewSet)
 
 app_name = 'RSR'
 
@@ -28,9 +36,11 @@ urlpatterns = [
     url(r'^listdelete/$', listdelete, name="listdelete"),
     url(r'^main/$', main, name = 'main'),
     url(r'^search/$', search, name='search'),
-
     #Edit page
     url(r'^edit/(?P<person_id>\d+)/$', views.person_edit, name='person-edit'),
+    #url(r'^LA/$', linkanalysis, name='LA'),
+    url(r'^logout/$', views.logout_page, name = 'logout'),
+    #Search/Export Team
     url(r'^edit_skill/(?P<skill_id>\d+)/$', views.skill_edit, name='skill-edit'),
     url(r'^edit_company/(?P<company_id>\d+)/$', views.company_edit, name='company-edit'),
     url(r'^edit_school/(?P<school_id>\d+)/$', views.school_edit, name='school-edit'),
@@ -78,8 +88,13 @@ urlpatterns = [
     url(r'^search/Language-autocomplete/$', Languageautocomplete.as_view(),
         name='LanguageSpoken-autocomplete',),
         #url for autocomplete function for Company class
-    url(r'^search/Company-autocomplete/$', Companyautocomplete.as_view(),
-        name='Company-autocomplete',)
+    url(r'^search/Company-autocomplete/$', Companyautocomplete.as_view(), name='Company-autocomplete',),
+    url(r'^search/Name-autocomplete/$', NameAutocomplete.as_view(), name='Name-autocomplete',),
+
+    url(r'dashboard', dashboard, name='dashboard'),
+    url(r'^', include(router.urls)),
+    url(r'^skills/count/$', api.SkillCount.as_view(), name='skill-count'),
+    url(r'^react/$',generic.TemplateView.as_view(template_name='react_test.html'))
 
 
 ]

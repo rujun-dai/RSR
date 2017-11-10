@@ -10,7 +10,7 @@ class PersonForm(forms.ModelForm):
         model = Person
         exclude=('Resume',)
         fields = '__all__'
-    	
+
 #### EDIT TEAM DO NOT USE THESE, THESE ARE FOR ADD FORMS ###
 class NewPersontoSkillForm(forms.ModelForm):
 
@@ -69,7 +69,7 @@ class NewPersontoProfessionalForm(forms.ModelForm):
 		fields = '__all__'
 
 #### USE BELOW FOR EDIT ###
-	
+
 class PersontoSkillForm(forms.ModelForm):
 	class Meta:
 		model = PersonToSkills
@@ -119,8 +119,6 @@ class PersontoSchoolForm(forms.ModelForm):
 		model = PersonToSchool
 		fields = '__all__'
 
-
-
 class CommentsForm(forms.ModelForm):
 	Comments = forms.CharField( widget=forms.Textarea )
 	class Meta:
@@ -129,16 +127,16 @@ class CommentsForm(forms.ModelForm):
 
 class DocumentForm(forms.Form):
 	pwd = os.path.dirname(__file__)
-	with open(pwd+"/static/config/config.txt") as myfile:
+	with open(pwd+"/static/RSR/config/config.txt") as myfile:
 		dataconfig="".join(line.rstrip() for line in myfile)
-    
+
 	docfile = forms.FileField(widget=forms.FileInput(attrs={'accept':dataconfig}),label='Select a file:')
 
 class SkillForm(forms.ModelForm):
 	class Meta:
 		model = Skills
 		fields = '__all__'
-		
+
 
 class CompanyForm(forms.ModelForm):
 	class Meta:

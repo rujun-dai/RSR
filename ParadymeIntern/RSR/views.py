@@ -2,6 +2,12 @@
 from .models import *
 import docx2txt
 from django.utils import timezone
+from itertools import chain
+from gensim.models import Word2Vec
+from gensim.models import Phrases
+from gensim.models.word2vec import LineSentence
+
+import os
 
 # Create your views here.
 #=======
@@ -24,17 +30,17 @@ from RSR.persondetails import Detail
 from RSR.persondetails2 import Detail2
 from django.views.generic.edit import UpdateView
 from dal import autocomplete
-
+from background_task import background
 
 ### json Parsing ##
 import json
-
+from .parsing import *
 ###TESTING OCR
 
 from PIL import Image
 from wand.image import Image as IMG
 import pytesseract
-# import textract
+import textract
 
 ### Limit group###
 
@@ -48,6 +54,10 @@ def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+def dashboard(request):
+    return render(request,'dashboard/barchart.html')
+
+
 @login_required
 def main(request):
     return render(request, 'main.html')
@@ -60,12 +70,267 @@ def get_string(name):
     return utf8_text
 
 
+def punct_space(token):
+    "helper that elimates puncations and whitespace"
+    return token.is_punct or token.is_space
+
+def line_review(filename):
+    "read resumes from the file and un-escapes orignal line break"
+    with codecs.open(filename,encoding='utf_8') as f:
+        for res in f:
+            yield res.replace('\\n','\n')
+
+def lemmatized_sentence_corpus(filename):
+    "use spacy to parse, lemmatize and yield sentences"
+    for parsed_res in nlp.pipe(line_review(filename),batch_size=10000,n_threads=3):
+        for sent in parsed_res.sents:
+            yield u' '.join([token.lemma_ for token in sent if not punct_space(token)])
+
+@background(schedule=timezone.now())
+def load_parsing_files():
+    normal_res  = ''
+    docs = Document.objects.all()
+    print(docs)
+    for doc in docs:
+        normal_res = normal_res + doc.wordstr
+    res2vec = Word2Vec(normal_res,size=300,window=10,sg=1,workers=4,min_count=5)
+    res2vec.save(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','vector_models1')))
+
+    for i in range(1,15):
+         res2vec.train(normal_res,total_examples=res2vec.corpus_count, epochs=res2vec.iter)
+         res2vec.save(os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..','..','www','Parsing','vector_models1')))
+
+#@background(schedule=timezone.now())
+def parse_back(words,doc,doc_type):
+    print('After',words,doc,doc_type)
+    parsed_json  = parse_file(words)
+    #either load json, or recieve json file
+    js = parsed_json
+
+    #iterate through json file
+    print('\n\n',js,'\n\n')
+    #initialize person out side of for loop/if statements so we can use it later
+    person = Person(Name="temp")
+    for key in js['person']:
+        if key == "name":
+            person.Name = js['person'][key]
+        elif key == "email":
+            if js['person'][key] == None:
+                person.Email = "Not parsed"
+            else:
+                person.Email = js['person'][key]
+        elif key == "address":
+            if js['person'][key] == None:
+                person.Address = "Not parsed"
+            else:
+                person.Address = js['person'][key]
+        elif key == "zipcode":
+            if js['person'][key] == None:
+                person.ZipCode = "Not parsed"
+            else:
+                person.ZipCode = js['person'][key]
+        elif key == "state":
+            if js['person'][key] == None:
+                person.State = 'Not Parsed'
+            else:
+                person.State = js['person'][key]
+        elif key == "phone":
+            person.PhoneNumber = js['person'][key]
+        elif key == "linkedin":
+            person.Linkedin = js['person'][key]
+        elif key == "github":
+            person.GitHub = js['person'][key]
+    person.Resume = doc
+    person.TypeResume = doc_type
+    person.save()
+    for label in js:
+        if label == "skills":
+            for key in js[label]:
+                #check to see if skill exists
+                query_set=Skills.objects.all()
+                query_set=query_set.filter(Name=key["skill"])
+                #if skill does not exist create skill
+                if not query_set:
+                    query_set = Skills(Name = key["skill"])
+                    query_set.save()
+                #if skill does exist, grab first match from queryset
+                else:
+                    query_set = query_set[0]
+                #person.save(commit = False)
+                skill_to_person = PersonToSkills(SkillsID = query_set, PersonID = person,YearsOfExperience = key["YearsOfExperience"])
+                skill_to_person.save()
+
+        elif label == "work":
+            for key in js[label]:
+                #check to see if company exists
+                query_set=Company.objects.all()
+
+                query_set=query_set.filter(Name=key["company"])
+                #if company does not exist create skill
+                if not query_set:
+                    query_set = Company(Name = key["company"])
+                    query_set.save()
+                #if company does exist, grab first match from queryset
+                else:
+                    query_set = query_set[0]
+                #intermediary table stuff
+                company_to_person = PersonToCompany(CompanyID = query_set, PersonID = person,
+                    Title = key["title"],
+                    ExperienceOnJob = key["experience"],
+                    # StartDate = key["startDate"],
+                    # EndDate = key["endDate"],
+                    Desc = key["summary"])
+                company_to_person.save()
+
+        elif label == "education":
+            for key in js[label]:
+                #check to see if School exists
+                query_set=School.objects.all()
+                query_set=query_set.filter(Name=key["school"]["name"]).filter(DegreeLevel = key["school"]["degreeLevel"])
+                #if School does not exist create skill
+                if not query_set:
+                    query_set = School(Name = key["school"]["name"], DegreeLevel = key["school"]["degreeLevel"])
+                    query_set.save()
+                #if School does exist, grab first match from queryset
+                else:
+                    query_set = query_set[0]
+
+                # NOW DO MAJOR
+                query_set_1=Major.objects.all()
+                query_set_1=query_set_1.filter(Name=key["major"]["major"]).filter(Dept__icontains = key["major"]["dept"]).filter(MajorMinor__icontains = key["major"]["major/minor"])
+                if not query_set_1:
+                    query_set_1 = Major(Name = key["major"]["major"], Dept = key["major"]["dept"], MajorMinor = key["major"]["major/minor"])
+                    query_set_1.save()
+                #if School does exist, grab first match from queryset
+                else:
+                    query_set_1 = query_set_1[0]
+
+                #intermediary table stuff
+                #person.save(commit = False)
+                ed_to_person = PersonToSchool(SchoolID = query_set, PersonID = person, MajorID = query_set_1,
+                    GPA = key["GPA"],
+                    GradDate = key["gradDate"])
+                ed_to_person.save()
+
+
+        elif label == "sideprojects":
+            for key in js[label]:
+                #check to see if project exists
+                query_set=SideProject.objects.all()
+                query_set=query_set.filter(Name=key["name"])
+                #if project does not exist create project
+                if not query_set:
+                    query_set = SideProject(Name = key["name"])
+                    query_set.save()
+                #if project does exist, grab first match from queryset
+                else:
+                    query_set = query_set[0]
+                #intermediary table stuff
+                person.save(commit = False)
+                project_to_person = PersonToSide(SideID = query_set, PersonID = person, Desc = key["description"])
+                project_to_person.save()
+
+        elif label == "award":
+            for key in js[label]:
+                #check to see if Award exists
+                query_set=Awards.objects.all()
+                query_set=query_set.filter(Name=key["name"])
+                #if Award does not exist create Award
+                if not query_set:
+                    query_set = Awards(Name = key["name"])
+                    query_set.save()
+                #if Award does exist, grab first match from queryset
+                else:
+                    query_set = query_set[0]
+                #intermediary table stuff
+                person.save(commit = False)
+                awards_to_person = PersonToAwards(AwardID = query_set, PersonID = person, Desc = key["description"])
+                awards_to_person.save()
+
+        elif label == "clearance":
+            query_set = Clearance.objects.all()
+            query_set = query_set.filter(ClearanceLevel = js[label]["level"])
+            if not query_set:
+                query_set = Clearance(ClearanceLevel=js[label]["level"])
+                query_set.save()
+            else:
+                query_set = query_set[0]
+            cl_to_person = PersonToClearance(PersonID=person, ClearanceLevel = query_set)
+            cl_to_person.save()
+
+        elif label == "languages":
+            for key in js[label]:
+                # check to see if language exists
+                query_set = LanguageSpoken.objects.all()
+                query_set = query_set.filter(Language=key["language"])
+                # if language does not exist create language
+                if not query_set:
+                    query_set = LanguageSpoken(Language=key["language"])
+                    query_set.save()
+                # if language does exist, grab first match from queryset
+                else:
+                    query_set = query_set[0]
+                # intermediary table stuff
+                person.save(commit = False)
+                language_to_person = PersonToLanguage(LangID=query_set, PersonID=person)
+                language_to_person.save()
+
+        elif label == "clubs":
+            for key in js[label]:
+                # check to see if club exists
+                query_set = Clubs_Hobbies.objects.all()
+                query_set = query_set.filter(Name=key["name"])
+                # if club does not exist create club
+                if not query_set:
+                    query_set = Clubs_Hobbies(Name=key["name"])
+                    query_set.save()
+                # if club does exist, grab first match from queryset
+                else:
+                    query_set = query_set[0]
+                # intermediary table stuff
+                person.save(commit = False)
+                club_to_person = PersonToClubs_Hobbies(CHID=query_set, PersonID=person, Desc=key["description"])
+                club_to_person.save()
+
+        elif label == "volunteering":
+            for key in js[label]:
+                # check to see if volunteer exists
+                query_set = Volunteering.objects.all()
+                query_set = query_set.filter(Name=key["name"])
+                # if volunteer does not exist create volunteer
+                if not query_set:
+                    query_set = Volunteering(Name=key["name"])
+                    query_set.save()
+                # if volunteer does exist, grab first match from queryset
+                else:
+                    query_set = query_set[0]
+                # intermediary table stuff
+                person.save(commit = False)
+                volunteer_to_person = PersonToVolunteering(VolunID=query_set, PersonID=person, Desc=key["description"])
+                volunteer_to_person.save()
+
+        elif label == "course":
+            for key in js[label]:
+                # check to see if course exists
+                query_set = Coursework.objects.all()
+                query_set = query_set.filter(Name=key["name"])
+                # if course does not exist create course
+                if not query_set:
+                    query_set = Coursework(Name=key["name"])
+                    query_set.save()
+                # if course does exist, grab first match from queryset
+                else:
+                    query_set = query_set[0]
+                # intermediary table stuff
+                person.save(commit = False)
+                course_to_person = PersonToCourse(CourseID=query_set, PersonID=person,Desc=key["description"])
+                course_to_person.save()
 @login_required
-@user_passes_test(lambda u: u.groups.filter(name='RSR').exists())
 def uploaddoc(request):
     # Handle file upload
-
-
+    print('POST')
+    print(timezone.now())
+# Handle file upload
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
@@ -95,266 +360,26 @@ def uploaddoc(request):
 
             else:
 
-                # temp_doc.wordstr = textract.process(temp_doc.docfile.path)
+                temp_doc.wordstr = textract.process(temp_doc.docfile.path).decode("utf-8")
 
-                # if len(temp_doc.wordstr) < 50:
-                img=IMG(filename=temp_doc.docfile.path,resolution=200)
+                if len(temp_doc.wordstr) < 50:
+                    img=IMG(filename=temp_doc.docfile.path,resolution=200)
 
-                img.save(filename='temp.jpg')
-                utf8_text = get_string('temp.jpg')
-                os.remove('temp.jpg')
+                    img.save(filename='temp.jpg')
+                    utf8_text = get_string('temp.jpg')
+                    os.remove('temp.jpg')
+                    temp_doc.wordstr = utf8_text.decode("utf-8")
+                    temp_doc.save(update_fields=['wordstr'])
 
-                print (utf8_text)
-                temp_doc.wordstr = utf8_text
                 temp_doc.save(update_fields=['wordstr'])
-
-                print (temp_doc.wordstr)
-                temp_doc.save(update_fields=['wordstr'])
-
-            '''
-            ============ PARSING TEAM =====================
-            FROM HERE YOU CAN CALL temp_doc.wordstr HERE TO GRAB STRING
-
-            ===============================================
-            '''
-            ###
-
-
-
-            #json testing#
-            #check for json file, wont be needed as parsing will return json#
-
-
-            #========== PARSING TEAM JSON =========== #
-            ## GET RID OF THIS LINE BELOW
-            ## replace with below line:  (just so we dont have to redo indents)
-            #if True:
-            # ======================================#
-
-
-            if ".json" in temp_doc.docfile.path:
-
-
-
-                #either load json, or recieve json file
-
-                ### ===================== ######
-                #PARSING, REPLACE temp_doc.docfile.path with the json path!!
-                ### ====================== ######
-                js = json.load(open(temp_doc.docfile.path))
-
-
-                #iterate through json file
-
-                #initialize person out side of for loop/if statements so we can use it later
-                p_name = temp_doc.firstname + " " + temp_doc.lastname
-                person = Person(Name=p_name)
-                for label in js:
-
-                    #Checking Labels to see which table to create
-                    if label == "person":
-                        for key in js[label]:
-                            #if key == "name":
-                            #    person.Name = js[label][key]
-                            if key == "email":
-                                person.Email = js[label][key]
-                            elif key == "address":
-                                person.Address = js[label][key]
-                            elif key == "zipcode":
-                                person.ZipCode = js[label][key]
-                            elif key == "state":
-                                person.State = js[label][key]
-                            elif key == "phone":
-                                person.PhoneNumber = js[label][key]
-                            elif key == "linkedin":
-                                person.Linkedin = js[label][key]
-                            elif key == "github":
-                                person.GitHub = js[label][key]
-                        person.Resume = temp_doc.docfile
-                        person.TypeResume = temp_doc.type
-                        person.save()
-
-
-                    elif label == "skills":
-                        for key in js[label]:
-                            #check to see if skill exists
-                            query_set=Skills.objects.all()
-                            query_set=query_set.filter(Name=key["skill"])
-                            #if skill does not exist create skill
-                            if not query_set:
-                                query_set = Skills(Name = key["skill"])
-                                query_set.save()
-                            #if skill does exist, grab first match from queryset
-                            else:
-                                query_set = query_set[0]
-                            skill_to_person = PersonToSkills(SkillsID = query_set, PersonID = person,YearsOfExperience = key["YearsOfExperience"])
-                            skill_to_person.save()
-
-                    elif label == "work":
-                        for key in js[label]:
-                            #check to see if company exists
-                            query_set=Company.objects.all()
-                            query_set=query_set.filter(Name=key["company"])
-                            #if company does not exist create skill
-                            if not query_set:
-                                query_set = Company(Name = key["company"])
-                                query_set.save()
-                            #if company does exist, grab first match from queryset
-                            else:
-                                query_set = query_set[0]
-                            #intermediary table stuff
-                            company_to_person = PersonToCompany(CompanyID = query_set, PersonID = person,
-                                Title = key["title"],
-                                ExperienceOnJob = key["experience"],
-                                StartDate = key["startDate"],
-                                EndDate = key["endDate"],
-                                Desc = key["summary"])
-                            company_to_person.save()
-
-                    elif label == "education":
-                        for key in js[label]:
-                            #check to see if School exists
-                            query_set=School.objects.all()
-                            query_set=query_set.filter(Name=key["school"]["name"]).filter(DegreeLevel = key["school"]["degreeLevel"])
-                            #if School does not exist create skill
-                            if not query_set:
-                                query_set = School(Name = key["school"]["name"], DegreeLevel = key["school"]["degreeLevel"])
-                                query_set.save()
-                            #if School does exist, grab first match from queryset
-                            else:
-                                query_set = query_set[0]
-
-                            # NOW DO MAJOR
-                            query_set_1=Major.objects.all()
-                            query_set_1=query_set_1.filter(Name=key["major"]["major"]).filter(Dept__icontains = key["major"]["dept"]).filter(MajorMinor__icontains = key["major"]["major/minor"])
-                            if not query_set_1:
-                                query_set_1 = Major(Name = key["major"]["major"], Dept = key["major"]["dept"], MajorMinor = key["major"]["major/minor"])
-                                query_set_1.save()
-                            #if School does exist, grab first match from queryset
-                            else:
-                                query_set_1 = query_set_1[0]
-
-                            #intermediary table stuff
-                            ed_to_person = PersonToSchool(SchoolID = query_set, PersonID = person, MajorID = query_set_1,
-                                GPA = key["GPA"],
-                                GradDate = key["gradDate"])
-                            ed_to_person.save()
-
-
-                    elif label == "sideprojects":
-                        for key in js[label]:
-                            #check to see if project exists
-                            query_set=SideProject.objects.all()
-                            query_set=query_set.filter(Name=key["name"])
-                            #if project does not exist create project
-                            if not query_set:
-                                query_set = SideProject(Name = key["name"])
-                                query_set.save()
-                            #if project does exist, grab first match from queryset
-                            else:
-                                query_set = query_set[0]
-                            #intermediary table stuff
-                            project_to_person = PersonToSide(SideID = query_set, PersonID = person, Desc = key["description"])
-                            project_to_person.save()
-
-                    elif label == "award":
-                        for key in js[label]:
-                            #check to see if Award exists
-                            query_set=Awards.objects.all()
-                            query_set=query_set.filter(Name=key["name"])
-                            #if Award does not exist create Award
-                            if not query_set:
-                                query_set = Awards(Name = key["name"])
-                                query_set.save()
-                            #if Award does exist, grab first match from queryset
-                            else:
-                                query_set = query_set[0]
-                            #intermediary table stuff
-                            awards_to_person = PersonToAwards(AwardID = query_set, PersonID = person, Desc = key["description"])
-                            awards_to_person.save()
-
-                    elif label == "clearance":
-                        query_set = Clearance.objects.all()
-                        query_set = query_set.filter(ClearanceLevel = js[label]["level"])
-                        if not query_set:
-                            query_set = Clearance(ClearanceLevel=js[label]["level"])
-                            query_set.save()
-                        else:
-                            query_set = query_set[0]
-                        cl_to_person = PersonToClearance(PersonID=person, ClearanceLevel = query_set)
-                        cl_to_person.save()
-
-                    elif label == "languages":
-                        for key in js[label]:
-                            # check to see if language exists
-                            query_set = LanguageSpoken.objects.all()
-                            query_set = query_set.filter(Language=key["language"])
-                            # if language does not exist create language
-                            if not query_set:
-                                query_set = LanguageSpoken(Language=key["language"])
-                                query_set.save()
-                            # if language does exist, grab first match from queryset
-                            else:
-                                query_set = query_set[0]
-                            # intermediary table stuff
-                            language_to_person = PersonToLanguage(LangID=query_set, PersonID=person)
-                            language_to_person.save()
-
-                    elif label == "clubs":
-                        for key in js[label]:
-                            # check to see if club exists
-                            query_set = Clubs_Hobbies.objects.all()
-                            query_set = query_set.filter(Name=key["name"])
-                            # if club does not exist create club
-                            if not query_set:
-                                query_set = Clubs_Hobbies(Name=key["name"])
-                                query_set.save()
-                            # if club does exist, grab first match from queryset
-                            else:
-                                query_set = query_set[0]
-                            # intermediary table stuff
-                            club_to_person = PersonToClubs_Hobbies(CHID=query_set, PersonID=person, Desc=key["description"])
-                            club_to_person.save()
-
-                    elif label == "volunteering":
-                        for key in js[label]:
-                            # check to see if volunteer exists
-                            query_set = Volunteering.objects.all()
-                            query_set = query_set.filter(Name=key["name"])
-                            # if volunteer does not exist create volunteer
-                            if not query_set:
-                                query_set = Volunteering(Name=key["name"])
-                                query_set.save()
-                            # if volunteer does exist, grab first match from queryset
-                            else:
-                                query_set = query_set[0]
-                            # intermediary table stuff
-                            volunteer_to_person = PersonToVolunteering(VolunID=query_set, PersonID=person, Desc=key["description"])
-                            volunteer_to_person.save()
-
-                    elif label == "course":
-                        for key in js[label]:
-                            # check to see if course exists
-                            query_set = Coursework.objects.all()
-                            query_set = query_set.filter(Name=key["name"])
-                            # if course does not exist create course
-                            if not query_set:
-                                query_set = Coursework(Name=key["name"])
-                                query_set.save()
-                            # if course does exist, grab first match from queryset
-                            else:
-                                query_set = query_set[0]
-                            # intermediary table stuff
-                            course_to_person = PersonToCourse(CourseID=query_set, PersonID=person,Desc=key["description"])
-                            course_to_person.save()
-
-
-            return HttpResponseRedirect(reverse('RSR:uploaddoc'))
+            print ('CHECK ME',type(temp_doc.wordstr))
+            parse_back(temp_doc.wordstr,temp_doc.docfile.path,temp_doc.type)
     else:
         form = DocumentForm()
-
     documents = Document.objects.all()
-    return render(request,'index.html',{'documents': documents, 'form': form})
+    return render(request,'index.html',{'documents': documents,'form':form})
+
+
 
 #edit function
 @user_passes_test(lambda u: u.groups.filter(name='RSR').exists())
@@ -998,7 +1023,6 @@ def listdelete(request, template_name='uploadlist.html'):
 
     return render(request, template_name, {'object': documents})
 
-@user_passes_test(lambda u: u.groups.filter(name='RSR').exists())
 def parse_word_file(filepath):
 	parsed_string = docx2txt.process(filepath)
 	return parsed_string
@@ -1009,9 +1033,22 @@ def parse_word_file(filepath):
 @login_required
 @user_passes_test(lambda u: u.groups.filter(name='RSR').exists())
 def search(request):
+    arr = []
+    print(request.GET)
     query_set = Person.objects.order_by('Name').distinct()
     personFilter = PersonFilter(request.GET, query_set)
-    return render(request, 'SearchExport/search.html', {'personFilter': personFilter})
+    print(personFilter.qs)
+    if len(request.GET) != 0:
+        if request.GET['Skills']!='' and request.GET['YearOfExperienceForSkill']!='':
+            for p in personFilter.qs:
+                if len(PersonToSkills.objects.filter(PersonID = p.pk)\
+                    .filter(SkillsID =request.GET['Skills'])\
+                    .filter(YearsOfExperience = request.GET['YearOfExperienceForSkill'])) !=0:
+                    arr.append(p)
+        print('ARR',arr)
+    if len(arr)  == 0:
+        arr = list(personFilter.qs)
+    return render(request, 'SearchExport/search.html', {'personFilter': personFilter,'qs':arr})
 
 class ProfessionalDevelopmentAutocomplete(autocomplete.Select2QuerySetView):
     # autocomplete function for ProfessionalDevelopment class
@@ -1021,7 +1058,15 @@ class ProfessionalDevelopmentAutocomplete(autocomplete.Select2QuerySetView):
         if self.q:
             qs = qs.filter(Name__istartswith=self.q)
         return qs
+class NameAutocomplete(autocomplete.Select2QuerySetView):
+	def get_queryset(self):
+		#qs = Intern.objects.order_by('FName').distinct()
+		qs = Person.objects.all()
+		if self.q:
+		#qs = qs.filter(FName__exact='Sam')
 
+			qs = (qs.filter(Name__istartswith=self.q))
+		return qs
 class Skillsutocomplete(autocomplete.Select2QuerySetView):
     # autocomplete function for Skills class
     def get_queryset(self):
