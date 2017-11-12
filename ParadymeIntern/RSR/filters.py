@@ -15,10 +15,7 @@ class UploadListFilter(django_filters.FilterSet):
   type = django_filters.ChoiceFilter(choices=TYPERESUME_CHOICES)
   class Meta:
       model = Document
-      fields = ['firstname','lastname','type']
-      widgets = { 'firstname':TextInput(attrs = {'class':'form-control','placeholder': 'First Name','style':'color:#000'})
-
-      }
+      fields = ['type']
       order_by = ['pk']
 
 
