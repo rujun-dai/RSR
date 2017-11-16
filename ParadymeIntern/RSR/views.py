@@ -1170,11 +1170,11 @@ def search(request):
     personFilter = PersonFilter(request.GET, query_set)
     print(personFilter.qs)
     if len(request.GET) != 0:
-        if request.GET['Skills']!='' and request.GET['YearOfExperienceForSkill']!='':
+        if request.GET.get('Skills', '')!='' and request.GET.get('YearOfExperienceForSkill', '')!='':
             for p in personFilter.qs:
                 if len(PersonToSkills.objects.filter(PersonID = p.pk)\
-                    .filter(SkillsID =request.GET['Skills'])\
-                    .filter(YearsOfExperience = request.GET['YearOfExperienceForSkill'])) !=0:
+                    .filter(SkillsID =request.GET.get('Skills', ''))\
+                    .filter(YearsOfExperience = request.GET.get('YearOfExperienceForSkill', ''))) !=0:
                     arr.append(p)
         print('ARR',arr)
     if len(arr)  == 0:
@@ -1187,8 +1187,9 @@ class ProfessionalDevelopmentAutocomplete(autocomplete.Select2QuerySetView):
         qs = ProfessionalDevelopment.order_by('Name').distinct()
 
         if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
+            qs = qs.filter(Name__icontains=self.q)
         return qs
+
 class NameAutocomplete(autocomplete.Select2QuerySetView):
 	def get_queryset(self):
 		#qs = Intern.objects.order_by('FName').distinct()
@@ -1196,7 +1197,7 @@ class NameAutocomplete(autocomplete.Select2QuerySetView):
 		if self.q:
 		#qs = qs.filter(FName__exact='Sam')
 
-			qs = (qs.filter(Name__istartswith=self.q))
+			qs = (qs.filter(Name__icontains=self.q))
 		return qs
 class Skillsutocomplete(autocomplete.Select2QuerySetView):
     # autocomplete function for Skills class
@@ -1204,7 +1205,7 @@ class Skillsutocomplete(autocomplete.Select2QuerySetView):
         qs = Skills.objects.order_by('Name').distinct()
 
         if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
+            qs = qs.filter(Name__icontains=self.q)
         return qs
 
 class Volunteeringautocomplete(autocomplete.Select2QuerySetView):
@@ -1212,15 +1213,7 @@ class Volunteeringautocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Volunteering.objects.order_by('Name').distinct()
         if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
-        return qs
-
-class SearchBarautocomplete(autocomplete.Select2QuerySetView):
-    # autocomplete function for Search Bar that sorts by Person Names
-    def get_queryset(self):
-        qs = Person.objects.order_by('Name').distinct()
-        if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
+            qs = qs.filter(Name__icontains=self.q)
         return qs
 
 class Languageautocomplete(autocomplete.Select2QuerySetView):
@@ -1228,7 +1221,7 @@ class Languageautocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = LanguageSpoken.objects.order_by('Language').distinct()
         if self.q:
-            qs = qs.filter(Language__istartswith=self.q)
+            qs = qs.filter(Language__icontains=self.q)
         return qs
 
 class Companyautocomplete(autocomplete.Select2QuerySetView):
@@ -1236,9 +1229,38 @@ class Companyautocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Company.objects.order_by('Name').distinct()
         if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
+            qs = qs.filter(Name__icontains=self.q)
         return qs
 
+class Courseworkautocomplete(autocomplete.Select2QuerySetView):
+    # autocomplete function for Coursework class
+    def get_queryset(self):
+        qs = PersonToCourse.objects.order_by('Desc').distinct()
+        if self.q:
+            qs = qs.filter(Desc__icontains=self.q)
+        return qs
+
+class Awardsautocomplete(autocomplete.Select2QuerySetView):
+    # autocomplete function for Awards class
+    def get_queryset(self):
+        qs = Awards.objects.order_by('Name').distinct()
+        if self.q:
+            qs = qs.filter(Name__icontains=self.q)
+        return qs
+
+class Titleautocomplete(autocomplete.Select2QuerySetView):
+    # autocomplete function for Title class
+    def get_queryset(self):
+        qs = PersonToCompany.objects.order_by('Title').distinct()
+        if self.q:
+            qs = qs.filter(Title__icontains=self.q)
+        return qs
+
+    def get_result_label(self, item):
+        return item.Title
+
+    def get_result_value(self, item):
+        return item.Title
 #OCR's Search. REGEX ON RESUME TEXT
 
 def OCRSearch(request):
