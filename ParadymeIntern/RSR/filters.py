@@ -61,6 +61,11 @@ class PersonFilter(django_filters.FilterSet):
     Skills = django_filters.ModelMultipleChoiceFilter(name='persontoskills__SkillsID',
                                               queryset=Skills.objects.all().order_by('Name').distinct(),
                                               widget=autocomplete.ModelSelect2Multiple(url='RSR:Skills-autocomplete'))
+    Skills_AND = django_filters.ModelMultipleChoiceFilter(name='persontoskills__SkillsID',
+                                                      queryset=Skills.queryset.order_by('Name').distinct(),
+                                                      widget=autocomplete.ModelSelect2Multiple(
+                                                          url='RSR:Skills-autocomplete'),
+                                                          conjoined = True)
     YearOfExperienceForSkill = django_filters.ModelChoiceFilter(name='persontoskills__YearsOfExperience',lookup_expr='gte',
                                                                 queryset=PersonToSkills.objects.values_list('YearsOfExperience',flat=True).
                                                                 order_by('YearsOfExperience').distinct(),to_field_name='YearsOfExperience')
@@ -94,4 +99,4 @@ class PersonFilter(django_filters.FilterSet):
         model = Person
         fields = ['SchoolAttend', 'GraduateDate', 'Major', 'DegreeLevel', 'GPAlb', 'GPAub','Language', 'Skills',
                    'YearOfExperienceForSkill', 'ProfessionalDevelopment', 'Award', 'CompanyWorked', 'Title',
-                   'SecurityClearance', 'Volunteering', 'Club_Hobby','TypeResume','UploadDate','Name']
+                   'SecurityClearance', 'Volunteering', 'Club_Hobby','TypeResume','UploadDate','Name', 'Skills_AND']
