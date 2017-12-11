@@ -31,7 +31,7 @@ from RSR.persondetails2 import Detail2
 from django.views.generic.edit import UpdateView
 from dal import autocomplete
 from background_task import background
-
+from datetime import datetime
 ### json Parsing ##
 import json
 from .parsing import *
@@ -327,28 +327,36 @@ def parse_back(words,doc,doc_type):
                 course_to_person.save()
 @login_required
 def uploaddoc(request):
-    # Handle file upload
-    print('POST')
-    print(timezone.now())
 # Handle file upload
     if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
-        if form.is_valid():
-            #### PARSING TEAM = AT THE END OF THE NEXT LINES, USE
-            #### temp_doc.wordstr TO GRAB STRING ####
-
-
+        form = DocumentForm()
+        print(request.FILES)
+        files = request.FILES.getlist('docfile')
+        print("File list",files)
+        if 1==1:
             temp_doc = Document(docfile=request.FILES['docfile'])
-
-            #temp_doc.firstname = Document(docfile=request.POST.get('firstname'))
-            #temp_doc.lastname = Document(docfile=request.POST.get('lastname'))
-            #temp_doc.type = Document(docfile=request.POST.get('type'))
-            temp_doc.firstname = request.POST['firstname']
-            temp_doc.lastname = request.POST['lastname']
             temp_doc.type = request.POST['type']
             temp_doc.uploaduser = request.user.username
 
             temp_doc.save()
+
+        # for f in files:
+        #     form = DocumentForm(request.POST, f)
+        #     print("Form is ",form)
+        #     if form.is_valid():
+        #
+        #         #### PARSING TEAM = AT THE END OF THE NEXT LINES, USE
+        #         #### temp_doc.wordstr TO GRAB STRING ####
+        #
+        #         temp_doc = Document(docfile=request.FILES['docfile'])
+        #
+        #         #temp_doc.firstname = Document(docfile=request.POST.get('firstname'))
+        #         #temp_doc.lastname = Document(docfile=request.POST.get('lastname'))
+        #         #temp_doc.type = Document(docfile=request.POST.get('type'))
+        #         temp_doc.type = request.POST['type']
+        #         temp_doc.uploaduser = request.user.username
+        #
+        #         temp_doc.save()
 
             if ".doc" in temp_doc.docfile.path:
                 print (temp_doc.docfile.path)
@@ -356,7 +364,7 @@ def uploaddoc(request):
                 print (temp_doc.wordstr)
                 temp_doc.save(update_fields=['wordstr'])
 
-            ### UNCOMMENT THESE LINES FOR MAC/LINUX USERS: OCR/TEXTRACT
+                ### UNCOMMENT THESE LINES FOR MAC/LINUX USERS: OCR/TEXTRACT
 
             else:
 
@@ -384,20 +392,25 @@ def uploaddoc(request):
 #edit function
 @user_passes_test(lambda u: u.groups.filter(name='RSR').exists())
 def person_edit(request, person_id):
-	instance = get_object_or_404(Person, id=person_id)
-	form = PersonForm(request.POST or None, instance=instance)
+
+    instance = get_object_or_404(Person, id=person_id)
+    form = PersonForm(request.POST or None, instance=instance)
 
 
-	if form.is_valid():
-		form.save()
+    if form.is_valid():
+        person = Person.objects.get(pk=person_id)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
+        form.save()
 
-		return HttpResponseRedirect(reverse('RSR:detail', args=[instance.pk]))
-	context = {
-		'form' : form,
-		'pk' : person_id,
-		'person':instance
-	}
-	return render(request, 'person_update_form.html', context)
+        return HttpResponseRedirect(reverse('RSR:detail', args=[instance.pk]))
+    context = {
+    	'form' : form,
+    	'pk' : person_id,
+    	'person':instance
+    }
+    return render(request, 'person_update_form.html', context)
 
 @user_passes_test(lambda u: u.groups.filter(name='RSR').exists())
 def skill_edit(request, skill_id):
@@ -405,6 +418,10 @@ def skill_edit(request, skill_id):
     form = PersontoSkillForm(request.POST or None, instance=instance)
 
     if form.is_valid():
+        person = Person.objects.get(pk=instance.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         form.save()
 
         return HttpResponseRedirect(reverse('RSR:detail', args=[instance.PersonID.pk]))
@@ -421,6 +438,10 @@ def company_edit(request, company_id):
     form = PersontoCompanyForm(request.POST or None, instance=instance)
 
     if form.is_valid():
+        person = Person.objects.get(pk=instance.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         form.save()
         return HttpResponseRedirect(reverse('RSR:detail', args=[instance.PersonID.pk]))
 
@@ -437,6 +458,10 @@ def school_edit(request, school_id):
     form = PersontoSchoolForm(request.POST or None, instance=instance)
 
     if form.is_valid():
+        person = Person.objects.get(pk=instance.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         form.save()
         return HttpResponseRedirect(reverse('RSR:detail', args=[instance.PersonID.pk]))
 
@@ -451,8 +476,12 @@ def school_edit(request, school_id):
 def course_edit(request, course_id):
     instance = get_object_or_404(PersonToCourse, id=course_id)
     form = PersontoCourseForm(request.POST or None, instance=instance)
-
+    print("EDIT")
     if form.is_valid():
+        person = Person.objects.get(pk=instance.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         form.save()
         return HttpResponseRedirect(reverse('RSR:detail', args=[instance.PersonID.pk]))
 
@@ -469,6 +498,10 @@ def language_edit(request, language_id):
     form = PersontoLanguageForm(request.POST or None, instance=instance)
 
     if form.is_valid():
+        person = Person.objects.get(pk=instance.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         form.save()
         return HttpResponseRedirect(reverse('RSR:detail', args=[instance.PersonID.pk]))
 
@@ -485,6 +518,10 @@ def sidepro_edit(request, sidepro_id):
     form = PersontoSideForm(request.POST or None, instance=instance)
 
     if form.is_valid():
+        person = Person.objects.get(pk=instance.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         form.save()
         return HttpResponseRedirect(reverse('RSR:detail', args=[instance.PersonID.pk]))
 
@@ -501,6 +538,10 @@ def award_edit(request, award_id):
     form = PersontoAwardForm(request.POST or None, instance=instance)
 
     if form.is_valid():
+        person = Person.objects.get(pk=instance.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         form.save()
         return HttpResponseRedirect(reverse('RSR:detail', args=[instance.PersonID.pk]))
 
@@ -517,6 +558,10 @@ def club_edit(request, club_id):
     form = PersontoClubForm(request.POST or None, instance=instance)
 
     if form.is_valid():
+        person = Person.objects.get(pk=instance.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         form.save()
         return HttpResponseRedirect(reverse('RSR:detail', args=[instance.PersonID.pk]))
 
@@ -533,6 +578,10 @@ def volunteer_edit(request, volunteer_id):
     form = PersontoVolunteeringForm(request.POST or None, instance=instance)
 
     if form.is_valid():
+        person = Person.objects.get(pk=instance.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         form.save()
         return HttpResponseRedirect(reverse('RSR:detail', args=[instance.PersonID.pk]))
 
@@ -549,6 +598,10 @@ def professional_edit(request,pro_id):
     form = PersontoProfessionalForm(request.POST or None, instance=instance)
 
     if form.is_valid():
+        person = Person.objects.get(pk=instance.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         form.save()
         return HttpResponseRedirect(reverse('RSR:detail', args=[instance.PersonID.pk]))
 
@@ -564,6 +617,10 @@ def clearance_edit(request,clearance_id):
     form = PersontoClearanceForm(request.POST or None, instance=instance)
 
     if form.is_valid():
+        person = Person.objects.get(pk=instance.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         form.save()
         return HttpResponseRedirect(reverse('RSR:detail', args=[instance.PersonID.pk]))
 
@@ -582,6 +639,10 @@ def clearance_edit(request,clearance_id):
 def skill_delete(request,pk,template_name='skill_update_form.html'):
     skills = get_object_or_404(PersonToSkills, pk=pk)
     if request.method == 'POST':
+        person = Person.objects.get(pk=skill.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         skills.delete()
         return HttpResponseRedirect(reverse('RSR:detail', args=[skills.PersonID.pk]))
     return render(request, template_name, {'object': skills})
@@ -592,6 +653,10 @@ def skill_delete(request,pk,template_name='skill_update_form.html'):
 def company_delete(request,pk,template_name='detail.html'):
     company = get_object_or_404(PersonToCompany, pk=pk)
     if request.method == 'POST':
+        person = Person.objects.get(pk=company.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         company.delete()
         return HttpResponseRedirect(reverse('RSR:detail', args=[company.PersonID.pk]))
     return render(request, template_name, {'object': company})
@@ -600,6 +665,10 @@ def company_delete(request,pk,template_name='detail.html'):
 def school_delete(request,pk,template_name='detail.html'):
     school = get_object_or_404(PersonToSchool, pk=pk)
     if request.method == 'POST':
+        person = Person.objects.get(pk=school.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         school.delete()
         return HttpResponseRedirect(reverse('RSR:detail', args=[school.PersonID.pk]))
     return render(request, template_name, {'object': school})
@@ -608,6 +677,10 @@ def school_delete(request,pk,template_name='detail.html'):
 def course_delete(request,pk,template_name='detail.html'):
     course = get_object_or_404(PersonToCourse, pk=pk)
     if request.method == 'POST':
+        person = Person.objects.get(pk=course.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         course.delete()
         return HttpResponseRedirect(reverse('RSR:detail', args=[course.PersonID.pk]))
     return render(request, template_name, {'object': course})
@@ -616,6 +689,10 @@ def course_delete(request,pk,template_name='detail.html'):
 def language_delete(request,pk,template_name='detail.html'):
     language = get_object_or_404(PersonToLanguage, pk=pk)
     if request.method == 'POST':
+        person = Person.objects.get(pk=language.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         language.delete()
         return HttpResponseRedirect(reverse('RSR:detail', args=[language.PersonID.pk]))
     return render(request, template_name, {'object': language})
@@ -624,6 +701,10 @@ def language_delete(request,pk,template_name='detail.html'):
 def sidepro_delete(request,pk,template_name='detail.html'):
     sidepro = get_object_or_404(PersonToSide, pk=pk)
     if request.method == 'POST':
+        person = Person.objects.get(pk=sidepro.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         sidepro.delete()
         return HttpResponseRedirect(reverse('RSR:detail', args=[sidepro.PersonID.pk]))
     return render(request, template_name, {'object': sidepro})
@@ -632,6 +713,10 @@ def sidepro_delete(request,pk,template_name='detail.html'):
 def award_delete(request,pk,template_name='detail.html'):
     award = get_object_or_404(PersonToAwards, pk=pk)
     if request.method == 'POST':
+        person = Person.objects.get(pk=award.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         award.delete()
         return HttpResponseRedirect(reverse('RSR:detail', args=[award.PersonID.pk]))
     return render(request, template_name, {'object': award})
@@ -640,6 +725,10 @@ def award_delete(request,pk,template_name='detail.html'):
 def club_delete(request,pk,template_name='detail.html'):
     club = get_object_or_404(PersonToClubs_Hobbies, pk=pk)
     if request.method == 'POST':
+        person = Person.objects.get(pk=club.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         club.delete()
         return HttpResponseRedirect(reverse('RSR:detail', args=[club.PersonID.pk]))
     return render(request, template_name, {'object': club})
@@ -648,6 +737,10 @@ def club_delete(request,pk,template_name='detail.html'):
 def volunteer_delete(request,pk,template_name='detail.html'):
     volunteer = get_object_or_404(PersonToVolunteering, pk=pk)
     if request.method == 'POST':
+        person = Person.objects.get(pk=volunteer.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         volunteer.delete()
         return HttpResponseRedirect(reverse('RSR:detail', args=[volunteer.PersonID.pk]))
     return render(request, template_name, {'object': volunteer})
@@ -656,6 +749,10 @@ def volunteer_delete(request,pk,template_name='detail.html'):
 def professional_delete(request,pk,template_name='detail.html'):
     professional = get_object_or_404(PersonToProfessionalDevelopment, pk=pk)
     if request.method == 'POST':
+        person = Person.objects.get(pk=professional.PersonID.pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         professional.delete()
         return HttpResponseRedirect(reverse('RSR:detail', args=[professional.PersonID.pk]))
     return render(request, template_name, {'object': professional})
@@ -675,7 +772,6 @@ def detail(request,pk):
 
     detail_dic = Detail2(person)
     School_Detail = detail_dic['PersonToSchool']
-    print(School_Detail)
     Course_Detail = detail_dic['PersonToCourse']
     Pro = detail_dic['PersonToProfessionalDevelopment']
     Side = detail_dic['PersonToSide']
@@ -691,6 +787,10 @@ def detail(request,pk):
 
 
     if form.is_valid():
+        person = Person.objects.get(pk=pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         form.save()
 
         return HttpResponseRedirect(reverse('RSR:detail', args=[person.pk]))
@@ -700,6 +800,10 @@ def detail(request,pk):
     skillform = SkillForm(request.POST)
     persontoskill = NewPersontoSkillForm(request.POST)
     if skillform.is_valid() and not skillform.cleaned_data['Name'] == "":
+        person = Person.objects.get(pk=pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         skillform.save(commit=False)
         query_set = Skills.objects.all()
 
@@ -711,7 +815,6 @@ def detail(request,pk):
         else:
             query_set = query_set.filter(Name=skillform.cleaned_data['Name'])[0]
         if persontoskill.is_valid():
-            print(persontoskill.cleaned_data['YearsOfExperience'])
             persontoskill_temp = persontoskill.save(commit=False)
             persontoskill_temp.SkillsID = query_set
 
@@ -725,6 +828,10 @@ def detail(request,pk):
     companyform = CompanyForm(request.POST)
     persontocompany = NewPersontoCompanyForm(request.POST)
     if companyform.is_valid() and not companyform.cleaned_data['Name'] == "":
+        person = Person.objects.get(pk=pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         companyform.save(commit=False)
         query_set = Company.objects.all()
 
@@ -754,7 +861,10 @@ def detail(request,pk):
     persontoschool  = NewPersontoSchoolForm(request.POST)
 
     if schoolform.is_valid() and not schoolform.cleaned_data['Name'] == "":
-        print(1)
+        person = Person.objects.get(pk=pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         schoolform.save(commit=False)
         query_set = School.objects.all()
 
@@ -762,10 +872,8 @@ def detail(request,pk):
         if not query_set.filter(Name=schoolform.cleaned_data['Name']):
             schoolform.save()
             query_set = query_set.filter(Name=schoolform.cleaned_data['Name'])[0]
-            print(query_set)
         else:
             query_set = query_set.filter(Name=schoolform.cleaned_data['Name'])[0]
-            print(query_set)
         if majorform.is_valid():
             majorform.save(commit=False)
             query_set1 = Major.objects.all()
@@ -774,14 +882,11 @@ def detail(request,pk):
             if not query_set1.filter(Name=majorform.cleaned_data['Name'],MajorMinor = majorform.cleaned_data['MajorMinor']):
                 majorform.save()
                 query_set1 = query_set1.filter(Name=majorform.cleaned_data['Name'],MajorMinor = majorform.cleaned_data['MajorMinor'])[0]
-                print(query_set1)
             else:
                 query_set1 = query_set1.filter(Name=majorform.cleaned_data['Name'],MajorMinor = majorform.cleaned_data['MajorMinor'])[0]
-                print(query_set1)
 
             if persontoschool.is_valid():
                 persontoschool_temp = persontoschool.save(commit=False)
-                print (12)
                 persontoschool_temp.MajorID = query_set1
                 persontoschool_temp.SchoolID = query_set
 
@@ -795,7 +900,10 @@ def detail(request,pk):
     courseform = CourseForm(request.POST, prefix = "courseform")
     persontocourse = NewPersontoCourseForm(request.POST)
     if courseform.is_valid() and not courseform.cleaned_data['Name'] == "":
-        print ("how1")
+        person = Person.objects.get(pk=pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         courseform.save(commit=False)
         query_set = Coursework.objects.all()
 
@@ -807,7 +915,6 @@ def detail(request,pk):
         else:
             query_set = query_set.filter(Name=courseform.cleaned_data['Name'])[0]
         if persontocourse.is_valid():
-            print ("how")
             persontocourse_temp = persontocourse.save(commit=False)
             persontocourse_temp.CourseID = query_set
 
@@ -820,6 +927,10 @@ def detail(request,pk):
     langform = LanguageForm(prefix = "langform")
     langform = LanguageForm(request.POST, prefix = "langform")
     if langform.is_valid() and not langform.cleaned_data['Language'] == "":
+        person = Person.objects.get(pk=pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         langform.save(commit=False)
         query_set = LanguageSpoken.objects.all()
 
@@ -840,6 +951,10 @@ def detail(request,pk):
     sideform = SideForm(request.POST, prefix = "sideform")
     persontoside = NewPersontoSideForm(request.POST)
     if sideform.is_valid() and not sideform.cleaned_data['Name'] == "":
+        person = Person.objects.get(pk=pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         sideform.save(commit=False)
         query_set = SideProject.objects.all()
 
@@ -864,6 +979,10 @@ def detail(request,pk):
     awardform = AwardForm(request.POST, prefix = "awardform")
     persontoaward = NewPersontoAwardForm(request.POST)
     if awardform.is_valid() and not awardform.cleaned_data['Name'] == "":
+        person = Person.objects.get(pk=pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         awardform.save(commit=False)
         query_set = Awards.objects.all()
 
@@ -889,6 +1008,10 @@ def detail(request,pk):
     clubform = ClubForm(request.POST, prefix = "clubform")
     persontoclub = NewPersontoClubForm(request.POST)
     if clubform.is_valid() and not clubform.cleaned_data['Name'] == "":
+        person = Person.objects.get(pk=pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         clubform.save(commit=False)
         query_set = Clubs_Hobbies.objects.all()
 
@@ -915,6 +1038,10 @@ def detail(request,pk):
     volunteerform = VolunteeringForm(request.POST, prefix = "volunteerform")
     persontovolunteer = NewPersontoVolunteerForm(request.POST)
     if volunteerform.is_valid() and not volunteerform.cleaned_data['Name'] == "":
+        person = Person.objects.get(pk=pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         volunteerform.save(commit=False)
         query_set = Volunteering.objects.all()
 
@@ -940,6 +1067,10 @@ def detail(request,pk):
     professionalform = ProfessionalForm(request.POST, prefix = "professionalform")
     persontoprofessional = NewPersontoProfessionalForm(request.POST)
     if professionalform.is_valid() and not professionalform.cleaned_data['Name'] == "":
+        person = Person.objects.get(pk=pk)
+        print(person)
+        person.LastUpdated = datetime.now()
+        person.save(update_fields=['LastUpdated'])
         professionalform.save(commit=False)
         query_set = ProfessionalDevelopment.objects.all()
 
@@ -1039,11 +1170,11 @@ def search(request):
     personFilter = PersonFilter(request.GET, query_set)
     print(personFilter.qs)
     if len(request.GET) != 0:
-        if request.GET['Skills']!='' and request.GET['YearOfExperienceForSkill']!='':
+        if request.GET.get('Skills', '')!='' and request.GET.get('YearOfExperienceForSkill', '')!='':
             for p in personFilter.qs:
                 if len(PersonToSkills.objects.filter(PersonID = p.pk)\
-                    .filter(SkillsID =request.GET['Skills'])\
-                    .filter(YearsOfExperience = request.GET['YearOfExperienceForSkill'])) !=0:
+                    .filter(SkillsID =request.GET.get('Skills', ''))\
+                    .filter(YearsOfExperience = request.GET.get('YearOfExperienceForSkill', ''))) !=0:
                     arr.append(p)
         print('ARR',arr)
     if len(arr)  == 0:
@@ -1056,8 +1187,9 @@ class ProfessionalDevelopmentAutocomplete(autocomplete.Select2QuerySetView):
         qs = ProfessionalDevelopment.order_by('Name').distinct()
 
         if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
+            qs = qs.filter(Name__icontains=self.q)
         return qs
+
 class NameAutocomplete(autocomplete.Select2QuerySetView):
 	def get_queryset(self):
 		#qs = Intern.objects.order_by('FName').distinct()
@@ -1065,7 +1197,7 @@ class NameAutocomplete(autocomplete.Select2QuerySetView):
 		if self.q:
 		#qs = qs.filter(FName__exact='Sam')
 
-			qs = (qs.filter(Name__istartswith=self.q))
+			qs = (qs.filter(Name__icontains=self.q))
 		return qs
 class Skillsutocomplete(autocomplete.Select2QuerySetView):
     # autocomplete function for Skills class
@@ -1073,7 +1205,7 @@ class Skillsutocomplete(autocomplete.Select2QuerySetView):
         qs = Skills.objects.order_by('Name').distinct()
 
         if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
+            qs = qs.filter(Name__icontains=self.q)
         return qs
 
 class Volunteeringautocomplete(autocomplete.Select2QuerySetView):
@@ -1081,15 +1213,7 @@ class Volunteeringautocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Volunteering.objects.order_by('Name').distinct()
         if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
-        return qs
-
-class SearchBarautocomplete(autocomplete.Select2QuerySetView):
-    # autocomplete function for Search Bar that sorts by Person Names
-    def get_queryset(self):
-        qs = Person.objects.order_by('Name').distinct()
-        if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
+            qs = qs.filter(Name__icontains=self.q)
         return qs
 
 class Languageautocomplete(autocomplete.Select2QuerySetView):
@@ -1097,7 +1221,7 @@ class Languageautocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = LanguageSpoken.objects.order_by('Language').distinct()
         if self.q:
-            qs = qs.filter(Language__istartswith=self.q)
+            qs = qs.filter(Language__icontains=self.q)
         return qs
 
 class Companyautocomplete(autocomplete.Select2QuerySetView):
@@ -1105,9 +1229,38 @@ class Companyautocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Company.objects.order_by('Name').distinct()
         if self.q:
-            qs = qs.filter(Name__istartswith=self.q)
+            qs = qs.filter(Name__icontains=self.q)
         return qs
 
+class Courseworkautocomplete(autocomplete.Select2QuerySetView):
+    # autocomplete function for Coursework class
+    def get_queryset(self):
+        qs = PersonToCourse.objects.order_by('Desc').distinct()
+        if self.q:
+            qs = qs.filter(Desc__icontains=self.q)
+        return qs
+
+class Awardsautocomplete(autocomplete.Select2QuerySetView):
+    # autocomplete function for Awards class
+    def get_queryset(self):
+        qs = Awards.objects.order_by('Name').distinct()
+        if self.q:
+            qs = qs.filter(Name__icontains=self.q)
+        return qs
+
+class Titleautocomplete(autocomplete.Select2QuerySetView):
+    # autocomplete function for Title class
+    def get_queryset(self):
+        qs = PersonToCompany.objects.order_by('Title').distinct()
+        if self.q:
+            qs = qs.filter(Title__icontains=self.q)
+        return qs
+
+    def get_result_label(self, item):
+        return item.Title
+
+    def get_result_value(self, item):
+        return item.Title
 #OCR's Search. REGEX ON RESUME TEXT
 
 def OCRSearch(request):
